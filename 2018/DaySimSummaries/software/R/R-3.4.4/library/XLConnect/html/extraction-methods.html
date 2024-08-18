@@ -1,0 +1,118 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Workbook data extraction &amp; replacement operators</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for extraction-methods {XLConnect}"><tr><td>extraction-methods {XLConnect}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Workbook data extraction &amp; replacement operators</h2>
+
+<h3>Description</h3>
+
+<p>Operators that allow to extract/replace data from/on a <code><a href="workbook-class.html">workbook</a></code>.
+</p>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+<p>The <code><a href="workbook-class.html">workbook</a></code> object to use</p>
+</td></tr>
+<tr valign="top"><td><code>i</code></td>
+<td>
+<p>Name of worksheet (<code>[</code>, <code>[&lt;-</code>) or name of Excel name (<code>[[</code>, <code>[[&lt;-</code>)
+to extract or replace</p>
+</td></tr>
+<tr valign="top"><td><code>j</code></td>
+<td>
+<p>Only used with <code>[[&lt;-</code>: Optional formula to define the Excel name if it does not yet exist
+on the workbook.</p>
+</td></tr>
+<tr valign="top"><td><code>drop</code></td>
+<td>
+<p>Not used</p>
+</td></tr>
+<tr valign="top"><td><code>value</code></td>
+<td>
+<p>Data object used for replacement</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>Arguments passed to the corresponding underlying function to read/write the data</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>The workbook extraction operators are basically syntactic sugar for the common methods <code><a href="readWorksheet-methods.html">readWorksheet</a></code> (<code>[</code>), 
+<code><a href="writeWorksheet-methods.html">writeWorksheet</a></code> (<code>[&lt;-</code>), <code><a href="readNamedRegion-methods.html">readNamedRegion</a></code> (<code>[[</code>), 
+<code><a href="writeNamedRegion-methods.html">writeNamedRegion</a></code> (<code>[[&lt;-</code>).
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Martin Studer<br />
+Mirai Solutions GmbH <a href="http://www.mirai-solutions.com">http://www.mirai-solutions.com</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="workbook-class.html">workbook</a></code>, <code><a href="readWorksheet-methods.html">readWorksheet</a></code>, <code><a href="writeWorksheet-methods.html">writeWorksheet</a></code>,
+<code><a href="readNamedRegion-methods.html">readNamedRegion</a></code>, <code><a href="writeNamedRegion-methods.html">writeNamedRegion</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+# Load workbook (create if not existing)
+wb &lt;- loadWorkbook("extraction.xlsx", create = TRUE)
+
+# Write mtcars data set on a worksheet named 'mtcars1'.
+# Note: The 'mtcars1' sheet will be created automatically if it does
+# not exist yet. Also, default values for other writeWorksheet arguments
+# hold, i.e. the data set is written starting at the top left corner. 
+wb["mtcars1"] = mtcars
+
+# Write mtcars data set on a worksheet named 'mtcars2'.
+# Again, the 'mtcars2' worksheet is created automatically.
+# Additionally specify arguments passed to the underlying method
+# writeWorksheet.
+wb["mtcars2", startRow = 6, startCol = 11, header = FALSE] = mtcars
+
+# Read worksheets 'mtcars1' and 'mtcars2'.
+# Note: The default arguments hold for the underlying method
+# readWorksheet.
+wb["mtcars1"]
+wb["mtcars2"]
+
+# Write mtcars data set to a named region named 'mtcars3'. Since
+# it doesn't exist yet we also need to specify the formula to
+# define it. Also note that the sheet 'mtcars3' referenced in the
+# formula does not yet exist - it will be created automatically!
+# Moreover, default values for other writeNamedRegion arguments hold.
+wb[["mtcars3", "mtcars3!$B$7"]] = mtcars
+
+# Redefine named region 'mtcars3'. Note that no formula specification
+# is required since named region is already defined (see above example).
+wb[["mtcars3"]] = mtcars
+
+# Write mtcars data set to a named region 'mtcars4'. Since the named
+# region does not yet exist a formula specification is required. Also,
+# additional arguments are specified that are passed to the underlying
+# method writeNamedRegion.
+wb[["mtcars4", "mtcars4!$D$8", rownames = "Car"]] = mtcars
+
+# Read the named regions 'mtcars3' and 'mtcars4'.
+# Note: Default values hold for the underlying method readNamedRegion.
+wb[["mtcars3"]]
+wb[["mtcars4"]]
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>XLConnect</em> version 0.2-13 <a href="00Index.html">Index</a>]</div>
+</body></html>

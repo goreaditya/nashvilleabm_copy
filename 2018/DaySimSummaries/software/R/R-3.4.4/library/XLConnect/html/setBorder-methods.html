@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Specifying borders for cell styles</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for setBorder-methods {XLConnect}"><tr><td>setBorder-methods {XLConnect}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Specifying borders for cell styles</h2>
+
+<h3>Description</h3>
+
+<p>Specifies borders for a <code><a href="cellstyle-class.html">cellstyle</a></code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+## S4 method for signature 'cellstyle'
+setBorder(object,side,type,color)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>object</code></td>
+<td>
+<p>The <code><a href="cellstyle-class.html">cellstyle</a></code> to edit</p>
+</td></tr>
+<tr valign="top"><td><code>side</code></td>
+<td>
+<p>A vector with any combination of {&quot;bottom&quot;, &quot;left&quot;,
+&quot;right&quot;, &quot;top&quot;, &quot;all&quot;}</p>
+</td></tr>
+<tr valign="top"><td><code>type</code></td>
+<td>
+<p>Specifies the border type to be used - it is normally
+specified by a corresponding <code><a href="XLC.html">XLC</a></code> constant (see the
+<code><a href="XLC.html">XLC</a></code> border constant,
+e.g. <code>XLC$"BORDER.MEDIUM_DASHED"</code>)</p>
+</td></tr>
+<tr valign="top"><td><code>color</code></td>
+<td>
+<p>Defines the border color and is normally also specified
+via an <code><a href="XLC.html">XLC</a></code> constant.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>Specifies the border for a <code><a href="cellstyle-class.html">cellstyle</a></code>. Note that the arguments
+<code>type</code> and  <code>color</code> should be of the same length as side. In
+other words, for each specified <code>side</code> there should be a
+corresponding specification of <code>type</code> and <code>color</code>. If this is
+not the case the arguments will be automatically replicated to the
+length of <code>side</code>.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Martin Studer<br />
+Mirai Solutions GmbH <a href="http://www.mirai-solutions.com">http://www.mirai-solutions.com</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="workbook-class.html">workbook</a></code>, <code><a href="cellstyle-class.html">cellstyle</a></code>, <code><a href="setCellStyle-methods.html">setCellStyle</a></code>, 
+<code><a href="setStyleAction-methods.html">setStyleAction</a></code>, <code><a href="XLC.html">XLC</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+# Load workbook (create if not existing)
+wb &lt;- loadWorkbook("setBorder.xlsx", create = TRUE)
+
+# Create a worksheet
+createSheet(wb, name = "cellstyles")
+
+# Create a custom anonymous cell style
+cs &lt;- createCellStyle(wb)
+
+# Specify the border for the cell style created above
+setBorder(cs, side = c("bottom", "right"), type = XLC$"BORDER.THICK", 
+          color = c(XLC$"COLOR.BLACK", XLC$"COLOR.RED"))
+
+# Set the cell style created above for the top left cell (A1) in the 
+# 'cellstyles' worksheet
+setCellStyle(wb, sheet = "cellstyles", row = 1, col = 1, cellstyle = cs)
+
+# Save the workbook
+saveWorkbook(wb)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>XLConnect</em> version 0.2-13 <a href="00Index.html">Index</a>]</div>
+</body></html>

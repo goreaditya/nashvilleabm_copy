@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Print a workbook's filename</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for print-methods {XLConnect}"><tr><td>print-methods {XLConnect}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2> Print a workbook's filename </h2>
+
+<h3>Description</h3>
+
+<p>Prints the <code><a href="workbook-class.html">workbook</a></code>'s underlying filename.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+## S4 method for signature 'workbook'
+print(x,...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+<p>The <code><a href="workbook-class.html">workbook</a></code> to print</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>Arguments passed on to standard <code>print</code></p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>Prints the specified <code><a href="workbook-class.html">workbook</a></code>'s filename (see also the S4 <code>filename</code>
+slot of the <code><a href="workbook-class.html">workbook</a></code> class).
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Martin Studer<br />
+Mirai Solutions GmbH <a href="http://www.mirai-solutions.com">http://www.mirai-solutions.com</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="workbook-class.html">workbook</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+# Load existing demo Excel file 'mtcars.xlsx' from the XLConnect package
+wb.mtcars &lt;- loadWorkbook(system.file("demoFiles/mtcars.xlsx", 
+                          package = "XLConnect"))
+
+# Print the workbook's underlying filename
+print(wb.mtcars)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>XLConnect</em> version 0.2-13 <a href="00Index.html">Index</a>]</div>
+</body></html>

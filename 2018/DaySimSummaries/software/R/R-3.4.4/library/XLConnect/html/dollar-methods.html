@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Executing workbook methods in object$method(...) form</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for $-methods {XLConnect}"><tr><td>$-methods {XLConnect}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Executing workbook methods in object$method(...) form</h2>
+
+<h3>Description</h3>
+
+<p>Allows to execute <code><a href="workbook-class.html">workbook</a></code> methods in <code>workbook-object$method(...)</code> form.
+</p>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+<p>The object (<code><a href="workbook-class.html">workbook</a></code>, <code><a href="cellstyle-class.html">cellstyle</a></code>) to use</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p><code>x$method(...)</code> (where <code>x</code> is a <code><a href="workbook-class.html">workbook</a></code>-object) is equivalent to <code>method(x, ...)</code>
+</p>
+
+
+<h3>Note</h3>
+
+<p>The <code><a href="workbook-class.html">workbook</a></code> <code>$</code>-operator allows to call <code><a href="workbook-class.html">workbook</a></code>-methods in <code>workbook-object$method(...)</code> form. 
+This form might be considered more convenient or readable for programmers coming from other object-oriented languages such as Java, C#, ...
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Martin Studer<br />
+Mirai Solutions GmbH <a href="http://www.mirai-solutions.com">http://www.mirai-solutions.com</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="workbook-class.html">workbook</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+# Load workbook (create if not existing)
+wb &lt;- loadWorkbook("dollar.xlsx", create = TRUE)
+
+# Create a worksheet called 'CO2'
+wb$createSheet(name = "CO2")
+
+# Write built-in data set 'CO2' to the worksheet created above
+wb$writeWorksheet(CO2, sheet = "CO2", startRow = 4, startCol = 2)
+
+# Save workbook
+wb$saveWorkbook()
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>XLConnect</em> version 0.2-13 <a href="00Index.html">Index</a>]</div>
+</body></html>

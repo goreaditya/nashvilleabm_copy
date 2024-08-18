@@ -1,0 +1,99 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Checking if worksheets are very hidden in a workbook</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for isSheetVeryHidden-methods {XLConnect}"><tr><td>isSheetVeryHidden-methods {XLConnect}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Checking if worksheets are very hidden in a workbook</h2>
+
+<h3>Description</h3>
+
+<p>Checks if the specified worksheets are very hidden (but not just hidden) in a <code><a href="workbook-class.html">workbook</a></code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+## S4 method for signature 'workbook,character'
+isSheetVeryHidden(object,sheet)
+## S4 method for signature 'workbook,numeric'
+isSheetVeryHidden(object,sheet)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>object</code></td>
+<td>
+<p>The <code><a href="workbook-class.html">workbook</a></code> to use</p>
+</td></tr>
+<tr valign="top"><td><code>sheet</code></td>
+<td>
+<p>The name or index of the sheet to check</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>Returns <code>TRUE</code> if the specified named <code>sheet</code> is very hidden
+(not visible but also not just hidden), otherwise
+<code>FALSE</code>. <code>sheet</code> is vectorized such that multiple worksheets
+can be queried with one method call. An exception is thrown if the
+specified <code>sheet</code> does not exist. 
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Martin Studer<br />
+Mirai Solutions GmbH <a href="http://www.mirai-solutions.com">http://www.mirai-solutions.com</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="workbook-class.html">workbook</a></code>, <code><a href="hideSheet-methods.html">hideSheet</a></code>, <code><a href="unhideSheet-methods.html">unhideSheet</a></code>,
+<code><a href="isSheetHidden-methods.html">isSheetHidden</a></code>, <code><a href="isSheetVisible-methods.html">isSheetVisible</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+# Load workbook (create if not existing)
+wb &lt;- loadWorkbook("isSheetVeryHidden.xlsx", create = TRUE)
+
+# Write a couple of built-in data.frame's into sheets
+# with corresponding name
+for(obj in c("CO2", "airquality", "swiss")) {
+  createSheet(wb, name = obj)
+  writeWorksheet(wb, get(obj), sheet = obj)
+}
+
+# Very hide sheet 'airquality'
+hideSheet(wb, sheet = "airquality", veryHidden = TRUE)
+
+# Hide sheet 'CO2'
+hideSheet(wb, sheet = "CO2", veryHidden = FALSE)
+
+# Check if sheet 'airquality' is very hidden;
+# this should obviously return TRUE
+isSheetVeryHidden(wb, "airquality")
+
+# Check if sheet 'swiss' is very hidden;
+# this should obviously return FALSE
+isSheetVeryHidden(wb, "swiss")
+
+# Check if sheet 'CO2' is very hidden;
+# this should also return FALSE - the sheet
+# is just hidden but not very hidden
+isSheetVeryHidden(wb, "CO2")
+
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>XLConnect</em> version 0.2-13 <a href="00Index.html">Index</a>]</div>
+</body></html>

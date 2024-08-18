@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Standard Java exception handling for XLConnect</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for jTryCatch {XLConnect}"><tr><td>jTryCatch {XLConnect}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>
+Standard Java exception handling for XLConnect
+</h2>
+
+<h3>Description</h3>
+
+<p>Catches Java exceptions to create nicer error messages.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+jTryCatch(...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>...</code></td>
+<td>
+
+<p>Arguments to <code><a href="../../base/html/conditions.html">tryCatch</a></code> - an expression and optionally the argument
+<code>finally</code> to specify an expression to be evaluated before returning or exiting.
+</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>This function specifies a Java Throwable error handler that catches any Java exceptions. Caught exceptions
+are post-processed and re-thrown using <code><a href="../../base/html/stop.html">stop</a></code>.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Martin Studer<br />
+Mirai Solutions GmbH <a href="http://www.mirai-solutions.com">http://www.mirai-solutions.com</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="../../base/html/conditions.html">tryCatch</a></code>, <code><a href="../../base/html/stop.html">stop</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+try(XLConnect:::jTryCatch(J("java.lang.Integer")$valueOf("not an integer")))
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>XLConnect</em> version 0.2-13 <a href="00Index.html">Index</a>]</div>
+</body></html>

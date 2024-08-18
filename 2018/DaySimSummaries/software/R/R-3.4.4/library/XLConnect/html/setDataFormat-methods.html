@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Specifying custom data formats for cell styles</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for setDataFormat-methods {XLConnect}"><tr><td>setDataFormat-methods {XLConnect}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Specifying custom data formats for cell styles</h2>
+
+<h3>Description</h3>
+
+<p>Specifies a custom data format for a <code><a href="cellstyle-class.html">cellstyle</a></code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+## S4 method for signature 'cellstyle'
+setDataFormat(object,format)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>object</code></td>
+<td>
+<p>The <code><a href="cellstyle-class.html">cellstyle</a></code> to use</p>
+</td></tr>
+<tr valign="top"><td><code>format</code></td>
+<td>
+<p>A data format string</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>Specifies the data <code>format</code> to be used by the corresponding
+<code><a href="cellstyle-class.html">cellstyle</a></code>. Data formats are specified the standard
+Excel way. Refer to the Excel help or to the link below for more
+information. 
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Martin Studer<br />
+Mirai Solutions GmbH <a href="http://www.mirai-solutions.com">http://www.mirai-solutions.com</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>Excel custom data formats:<br />
+<a href="http://www.ozgrid.com/Excel/CustomFormats.htm">http://www.ozgrid.com/Excel/CustomFormats.htm</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="workbook-class.html">workbook</a></code>, <code><a href="cellstyle-class.html">cellstyle</a></code>, <code><a href="setCellStyle-methods.html">setCellStyle</a></code>, 
+<code><a href="setStyleAction-methods.html">setStyleAction</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+# Load workbook (create if not existing)
+wb &lt;- loadWorkbook("setDataFormat.xlsx", create = TRUE)
+
+# Create a worksheet
+createSheet(wb, name = "cellstyles")
+
+# Create a dummy data set with the current date/time (as POSIXct)
+now &lt;- data.frame(Now = Sys.time())
+
+# Write the value to the 'cellstyles' worksheet in the top left 
+# corner (cell A1)
+writeWorksheet(wb, now, sheet = "cellstyles", startRow = 1, 
+               startCol = 1, header = FALSE)
+
+# Create a custom anonymous cell style
+cs &lt;- createCellStyle(wb)
+
+# Specify a custom data format
+setDataFormat(cs, format = "dddd d-m-yyyy h:mm AM/PM")
+
+# Set the cell style created above for the top left cell (A1) in 
+# the 'cellstyles' worksheet
+setCellStyle(wb, sheet = "cellstyles", row = 1, col = 1, cellstyle = cs)
+
+# Set column width to display whole time/date string
+setColumnWidth(wb, sheet = "cellstyles", column = 1, width = 6000)
+
+# Save the workbook
+saveWorkbook(wb)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>XLConnect</em> version 0.2-13 <a href="00Index.html">Index</a>]</div>
+</body></html>

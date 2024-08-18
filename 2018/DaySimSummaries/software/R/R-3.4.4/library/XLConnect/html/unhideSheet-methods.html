@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Unhiding worksheets in a workbook</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for unhideSheet-methods {XLConnect}"><tr><td>unhideSheet-methods {XLConnect}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Unhiding worksheets in a workbook</h2>
+
+<h3>Description</h3>
+
+<p>Unhides the specified worksheets in a <code><a href="workbook-class.html">workbook</a></code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+## S4 method for signature 'workbook,character'
+unhideSheet(object,sheet)
+## S4 method for signature 'workbook,numeric'
+unhideSheet(object,sheet)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>object</code></td>
+<td>
+<p>The <code><a href="workbook-class.html">workbook</a></code> to use</p>
+</td></tr>
+<tr valign="top"><td><code>sheet</code></td>
+<td>
+<p>The name or index of the sheet to unhide</p>
+</td></tr>
+</table>
+
+
+<h3>Author(s)</h3>
+
+<p>Martin Studer<br />
+Mirai Solutions GmbH <a href="http://www.mirai-solutions.com">http://www.mirai-solutions.com</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="workbook-class.html">workbook</a></code>, <code><a href="hideSheet-methods.html">hideSheet</a></code>,
+<code><a href="isSheetHidden-methods.html">isSheetHidden</a></code>, <code><a href="isSheetVeryHidden-methods.html">isSheetVeryHidden</a></code>,
+<code><a href="isSheetVisible-methods.html">isSheetVisible</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+# Load workbook (create if not existing)
+wb &lt;- loadWorkbook("unhideWorksheet.xlsx", create = TRUE)
+
+# Create sheet 'airquality'
+createSheet(wb, name = "airquality")
+
+# Write the built-in data set airquality to worksheet
+# 'airquality'
+writeWorksheet(wb, airquality, sheet = "airquality")
+
+# Create sheet 'CO2'
+createSheet(wb, name = "CO2")
+
+# Write the built-in data set CO2 to worksheet 'C02'
+writeWorksheet(wb, CO2, sheet = "CO2")
+
+# Hide sheet 'airquality'
+hideSheet(wb, sheet = "airquality")
+
+# Unhide sheet 'airquality'
+unhideSheet(wb, sheet = "airquality")
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>XLConnect</em> version 0.2-13 <a href="00Index.html">Index</a>]</div>
+</body></html>

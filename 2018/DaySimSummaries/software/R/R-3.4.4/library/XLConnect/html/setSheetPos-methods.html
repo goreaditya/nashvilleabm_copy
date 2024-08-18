@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Setting worksheet position</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for setSheetPos-methods {XLConnect}"><tr><td>setSheetPos-methods {XLConnect}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Setting worksheet position</h2>
+
+<h3>Description</h3>
+
+<p>Sets the position of a worksheets in a <code><a href="workbook-class.html">workbook</a></code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+## S4 method for signature 'workbook,character,numeric'
+setSheetPos(object,sheet,pos)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>object</code></td>
+<td>
+<p>The <code><a href="workbook-class.html">workbook</a></code> to use</p>
+</td></tr>
+<tr valign="top"><td><code>sheet</code></td>
+<td>
+<p>The name of the worksheet (<code>character</code>) whose position to set. 
+This argument is vectorized such that the positions of multiple worksheets can be 
+set with one method call.</p>
+</td></tr>
+<tr valign="top"><td><code>pos</code></td>
+<td>
+<p>The position index to set for the corresponding <code>sheet</code>. If missing, sheets
+will be positioned in the order they are specified in the argument <code>sheet</code>.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>It is important to note that the worksheet positions will be applied one after the other in the order
+they have been specified.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Martin Studer<br />
+Mirai Solutions GmbH <a href="http://www.mirai-solutions.com">http://www.mirai-solutions.com</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="workbook-class.html">workbook</a></code>, <code><a href="getSheetPos-methods.html">getSheetPos</a></code>,
+<code><a href="getSheets-methods.html">getSheets</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+# mtcars xlsx file from demoFiles subfolder of package XLConnect
+demoExcelFile &lt;- system.file("demoFiles/mtcars.xlsx", package = "XLConnect")
+
+# Load workbook
+wb &lt;- loadWorkbook(demoExcelFile)
+
+# Move the 'mtcars3' worksheet to the front
+setSheetPos(wb, sheet = "mtcars3", pos = 1)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>XLConnect</em> version 0.2-13 <a href="00Index.html">Index</a>]</div>
+</body></html>

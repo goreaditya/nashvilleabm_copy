@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Creating worksheets in a workbook</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for createSheet-methods {XLConnect}"><tr><td>createSheet-methods {XLConnect}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Creating worksheets in a workbook</h2>
+
+<h3>Description</h3>
+
+<p>Creates worksheets with specified names in a <code><a href="workbook-class.html">workbook</a></code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+  ## S4 method for signature 'workbook'
+createSheet(object, name)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>object</code></td>
+<td>
+<p>The <code><a href="workbook-class.html">workbook</a></code> to use</p>
+</td></tr>
+<tr valign="top"><td><code>name</code></td>
+<td>
+<p>The name of the sheet to create</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>Creates a worksheet with the specified <code>name</code> if it does not
+already exist. Note that the naming of worksheets needs to be in line
+with Excel's convention, otherwise an exception will be thrown. For
+example, worksheet names cannot be longer than 31 characters. Also note
+that the <code>name</code> argument is vectorized, so multiple worksheets can
+be created in one method call.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Martin Studer<br />
+Mirai Solutions GmbH <a href="http://www.mirai-solutions.com">http://www.mirai-solutions.com</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="workbook-class.html">workbook</a></code>, <code><a href="removeSheet-methods.html">removeSheet</a></code>, 
+<code><a href="renameSheet-methods.html">renameSheet</a></code>,
+<code><a href="existsSheet-methods.html">existsSheet</a></code>, <code><a href="getSheets-methods.html">getSheets</a></code>,
+<code><a href="cloneSheet-methods.html">cloneSheet</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+# Load workbook (create if not existing)
+wb &lt;- loadWorkbook("createSheet.xlsx", create = TRUE)
+
+# Create a worksheet called 'CO2'
+createSheet(wb, name = "CO2")
+
+# Save workbook (this actually writes the file to disk)
+saveWorkbook(wb)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>XLConnect</em> version 0.2-13 <a href="00Index.html">Index</a>]</div>
+</body></html>

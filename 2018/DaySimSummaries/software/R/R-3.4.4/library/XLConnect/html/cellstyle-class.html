@@ -1,0 +1,119 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Class &quot;cellstyle&quot;</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for cellstyle-class {XLConnect}"><tr><td>cellstyle-class {XLConnect}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Class &quot;cellstyle&quot;</h2>
+
+<h3>Description</h3>
+
+<p>This class represents a cell style in a Microsoft Excel <code><a href="workbook-class.html">workbook</a></code>. S4 objects of this class
+and corresponding methods are used to manipulate cell styles. This includes setting data formats,
+borders, background- and foreground-colors, etc.
+</p>
+
+
+<h3>Objects from the Class</h3>
+
+<p>Cell styles are created by calling the <code><a href="createCellStyle-methods.html">createCellStyle</a></code> method on a
+<code><a href="workbook-class.html">workbook</a></code> object.
+</p>
+
+
+<h3>Slots</h3>
+
+
+<dl>
+<dt><code>jobj</code>:</dt><dd><p>Object of class <code>jobjRef</code> (see package <span class="pkg">rJava</span>) which represents a Java object reference that is used
+in the back-end to manipulate the underlying Excel cell style instance.</p>
+</dd>
+</dl>
+
+
+
+<h3>Note</h3>
+
+<p><span class="pkg">XLConnect</span> generally makes use of custom (named) cell styles. This allows users to more easily manage cell styles via Excel's cell style
+menu. For example, assuming you were using a specific custom cell style for your data table headers, you can change the header
+styling with a few clicks in Excel's cell style menu across all tables.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Martin Studer<br />
+Mirai Solutions GmbH <a href="http://www.mirai-solutions.com">http://www.mirai-solutions.com</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>Apply, create, or remove a cell style:<br />
+<a href="http://bit.ly/gj1KRx">http://bit.ly/gj1KRx</a> 
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="workbook-class.html">workbook</a></code>, <code><a href="createCellStyle-methods.html">createCellStyle</a></code>, <code><a href="setStyleAction-methods.html">setStyleAction</a></code>,
+<code><a href="setCellStyle-methods.html">setCellStyle</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+# Load workbook (create if not existing)
+wb &lt;- loadWorkbook("cellstyles.xlsx", create = TRUE)
+
+# We don't set a specific style action in this demo, so the 
+# default 'XLConnect' will be used (XLC$"STYLE_ACTION.XLCONNECT")
+
+# Create a sheet named 'mtcars'
+createSheet(wb, name = "mtcars")
+
+# Create a named region called 'mtcars' referring to the sheet
+# called 'mtcars'
+createName(wb, name = "mtcars", formula = "mtcars!$C$4")
+
+# Write built-in data set 'mtcars' to the above defined named region.
+# This will use the default style action 'XLConnect'.
+writeNamedRegion(wb, mtcars, name = "mtcars")
+
+# Now let's color all weight cells of cars with a weight &gt; 3.5 in red
+# (mtcars$wt &gt; 3.5)
+
+# First, create a corresponding (named) cell style
+heavyCar &lt;- createCellStyle(wb, name = "HeavyCar")
+
+# Specify the cell style to use a solid foreground color
+setFillPattern(heavyCar, fill = XLC$"FILL.SOLID_FOREGROUND")
+
+# Specify the foreground color to be used
+setFillForegroundColor(heavyCar, color = XLC$"COLOR.RED")
+
+# Which cars have a weight &gt; 3.5 ?
+rowIndex &lt;- which(mtcars$wt &gt; 3.5)
+
+# NOTE: The mtcars data.frame has been written offset with top 
+# left cell C4 - and we have also written a header row!
+# So, let's take that into account appropriately. Obviously,
+# the two steps could be combined directly into one ...
+rowIndex &lt;- rowIndex + 4
+
+# The same holds for the column index
+colIndex &lt;- which(names(mtcars) == "wt") + 2
+
+# Set the 'HeavyCar' cell style for the corresponding cells.
+# Note: the row and col arguments are vectorized!
+setCellStyle(wb, sheet = "mtcars", row = rowIndex, col = colIndex,
+             cellstyle = heavyCar)
+
+# Save workbook (this actually writes the file to disk)
+saveWorkbook(wb)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>XLConnect</em> version 0.2-13 <a href="00Index.html">Index</a>]</div>
+</body></html>

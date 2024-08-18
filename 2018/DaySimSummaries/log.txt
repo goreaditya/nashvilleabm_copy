@@ -1,0 +1,252 @@
+
+R version 3.4.4 (2018-03-15) -- "Someone to Lean On"
+Copyright (C) 2018 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> ##This is a temporary main control file with lots of TODOs to move 
+> ##this whole effort to a package with project specific config and run files
+> 
+> #Rprof()
+> 
+> #-----------------------
+> #Load packages
+> #-----------------------
+> ##TODO consider local R installation, with predownloaded packages in that library
+> library(foreign)
+> library(reshape)
+> library(XLConnect)
+Loading required package: XLConnectJars
+XLConnect 0.2-13 by Mirai Solutions GmbH [aut],
+  Martin Studer [cre],
+  The Apache Software Foundation [ctb, cph] (Apache POI),
+  Graph Builder [ctb, cph] (Curvesapi Java library)
+http://www.mirai-solutions.com ,
+http://miraisolutions.wordpress.com
+> library(descr)
+> library(Hmisc)
+Loading required package: lattice
+Loading required package: survival
+Loading required package: Formula
+Loading required package: ggplot2
+
+Attaching package: 'Hmisc'
+
+The following objects are masked from 'package:base':
+
+    format.pval, units
+
+> library(data.table)
+
+Attaching package: 'data.table'
+
+The following object is masked from 'package:reshape':
+
+    melt
+
+> library(plyr)
+
+Attaching package: 'plyr'
+
+The following objects are masked from 'package:Hmisc':
+
+    is.discrete, summarize
+
+The following objects are masked from 'package:reshape':
+
+    rename, round_any
+
+> 
+> setwd(getwd())
+> 
+> #------------------------------------
+> #Source functions and config settings
+> #------------------------------------
+> source("utilfunc.R")
+> #TODO function in package to create template config file in a specified location
+> source("daysim_output_config.R")
+> 
+> progressStart("run DaySim summaries",14)
+> 
+> #-----------------------
+> #Load data
+> #-----------------------
+> 
+> #Geographical correspondence
+> countycorr <- fread(tazcountycorr)
+> 
+> #Load DaySim outputs into Rdata files
+> progressNextStep("reading hh data")
+> if(runWrkSchLocationChoice | runVehAvailability | runDayPattern | runTourDestination | runTourMode)
++ {
++   if(prepDaySim)
++     readSaveRdata(dshhfile,"dshhdata")
++   if(prepSurvey)
++     readSaveRdata(surveyhhfile,"survhhdata")
++ }
+> 
+> progressNextStep("reading person data")
+> if(runWrkSchLocationChoice | runDayPattern | runTourDestination | runTourMode | runTourTOD | runTripMode | runTripTOD)
++ {
++   if(prepDaySim)
++     readSaveRdata(dsperfile,"dsperdata")
++   if(prepSurvey)
++     readSaveRdata(surveyperfile,"survperdata")
++ }
+> 
+> progressNextStep("reading person day data")
+> if(runDayPattern)
++ {
++   if(prepDaySim)
++     readSaveRdata(dspdayfile,"dspdaydata")
++   if(prepSurvey)
++     readSaveRdata(surveypdayfile,"survpdaydata")
++ }
+> 
+> progressNextStep("reading person day tour data")
+> if(runDayPattern | runTourDestination | runTourMode | runTourTOD | runTripMode)
++ {
++   if(prepDaySim)
++     readSaveRdata(dstourfile,"dstourdata")
++   if(prepSurvey)
++     readSaveRdata(surveytourfile,"survtourdata")
++ }
+> 
+> progressNextStep("reading person day trip data")
+> if(runDayPattern | runTripMode | runTripTOD)
++ {
++   if(prepDaySim)
++     readSaveRdata(dstripfile,"dstripdata")
++   if(prepSurvey)
++     readSaveRdata(surveytripfile,"survtripdata")
++ }
+> 
+> #Optional tour weight adjustment
+> if(tourAdj)
++ {
++   touradj <- fread(tourAdjFile)
++ }
+> 
+> #force gc()
+> gc()
+           used  (Mb) gc trigger   (Mb)  max used   (Mb)
+Ncells  1725769  92.2    2637877  140.9   2164898  115.7
+Vcells 61164168 466.7  170216417 1298.7 163153304 1244.8
+> 
+> #-----------------------
+> #Run tabulations
+> #-----------------------
+> ##TODO split between preparing tables in an R object and then putting them somewhere
+> ##TODO e.g. in a spreadsheet, in a pdf report, etc.
+> 
+> #source("nonhwy.R")
+> 
+> progressNextStep("summarizing work location choice")
+> if(runWrkSchLocationChoice)
++ {
++   source("wrkschlocation.R")
++ }
+[1] "Work/School Location Summary...Started"
+WARNING: An illegal reflective access operation has occurred
+WARNING: Illegal reflective access by org.apache.poi.openxml4j.util.ZipSecureFile$1 (file:/E:/Projects/Clients/NashvilleMPO/ModelUpdate2023/GitHub/nashvilleabm_abm_tcad9/2018/DaySimSummaries/software/R/R-3.4.4/library/XLConnect/java/poi-ooxml-3.16.jar) to field java.io.FilterInputStream.in
+WARNING: Please consider reporting this to the maintainers of org.apache.poi.openxml4j.util.ZipSecureFile$1
+WARNING: Use --illegal-access=warn to enable warnings of further illegal reflective access operations
+WARNING: All illegal access operations will be denied in a future release
+[1] "Work/School Location Summary...Finished"
+> progressNextStep("summarizing vehicle ownership choice")
+> if(runVehAvailability)
++ {
++   source("vehavailability.R")
++ }
+[1] "Vehicle Availabililty Summary...Started"
+[1] "Vehicle Availabililty Summary...Finished"
+> progressNextStep("summarizing Day pattern")
+> if(runDayPattern)
++ {
++   source("daypattern.R")
++ }
+[1] "Day Pattern Summary...Started"
+[1] "Day Pattern Summary...Finished"
+> progressNextStep("summarizing Destination Choice")
+> if(runTourDestination)
++ {
++   source("tourdestination.R")
++ }
+[1] "Tour Destination Summary...Started"
+[1] "Tour Destination Summary...Finished"
+> progressNextStep("summarizing Trip Destination Choice")
+> if(runTourDestination)
++ {
++   source("tripdestination.R")
++ }
+[1] "Trip Destination Summary...Started"
+[1] "Trip Destination Summary...Finished"
+> progressNextStep("summarizing Tour Mode Choice") 
+> if(runTourMode)
++ {
++   source("tourmode.R")
++ }
+[1] "Tour Mode Summary...Started"
+[1] "Tour Mode Summary...Finished"
+> progressNextStep("summarizing Tour Time of Day Choice") 
+> if(runTourTOD)
++ {
++   source("tourtod.R")
++ }
+[1] "Tour Time of Day Summary...Started"
+[1] "Tour Time of Day Summary...Finished"
+> progressNextStep("summarizing Trip Mode Choice") 
+> if(runTripMode)
++ {
++   source("tripmode.R")
++ }
+[1] "Trip Mode Summary...Started"
+[1] "Trip Mode Summary...Finished"
+> progressNextStep("summarizing Trip Time of Day Choice")
+> if(runTripTOD)
++ {
++   source("triptod.R")
++ }
+[1] "Trip Time of Day Summary...Started"
+[1] "survey"
+[1] "times are in HHMM format"
+[1] "daysim"
+[1] "times are in minutes"
+[1] "Trip Time of Day Summary...Finished"
+> 
+> progressEnd(outputsDir)
+   steps                            stepnames stepruntimes cumruntimes
+1      1                      reading hh data         4.23        4.23
+2      2                  reading person data        10.19       14.42
+3      3              reading person day data         9.20       23.62
+4      4         reading person day tour data        21.20       44.82
+5      5         reading person day trip data        48.41       93.23
+6      6     summarizing work location choice        25.66      118.89
+7      7 summarizing vehicle ownership choice         3.04      121.93
+8      8              summarizing Day pattern       129.50      251.43
+9      9       summarizing Destination Choice        15.21      266.64
+10    10  summarizing Trip Destination Choice        14.67      281.31
+11    11         summarizing Tour Mode Choice        10.45      291.76
+12    12  summarizing Tour Time of Day Choice        12.31      304.07
+13    13         summarizing Trip Mode Choice        14.89      318.96
+14    14  summarizing Trip Time of Day Choice        20.77      339.73
+> 
+> # Rprof(NULL)
+> # memprof <- summaryRprof()
+> 
+> proc.time()
+   user  system elapsed 
+ 404.07   99.09  349.64 

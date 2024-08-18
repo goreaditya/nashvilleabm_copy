@@ -1,0 +1,207 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Reading Excel tables from a workbook</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for readTable {XLConnect}"><tr><td>readTable {XLConnect}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Reading Excel tables from a workbook</h2>
+
+<h3>Description</h3>
+
+<p>Reads Excel tables (Office 2007+) from a <code><a href="workbook-class.html">workbook</a></code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+## S4 method for signature 'workbook,numeric'
+readTable(object, sheet, table, header, rownames, colTypes, forceConversion, 
+dateTimeFormat, check.names, useCachedValues, keep, drop, simplify, readStrategy)
+## S4 method for signature 'workbook,character'
+readTable(object, sheet, table, header, rownames, colTypes, forceConversion, 
+dateTimeFormat, check.names, useCachedValues, keep, drop, simplify, readStrategy)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>object</code></td>
+<td>
+<p>The <code><a href="workbook-class.html">workbook</a></code> to use</p>
+</td></tr>
+<tr valign="top"><td><code>sheet</code></td>
+<td>
+<p>The index or name of the worksheet on which to look for the specified <code>table</code></p>
+</td></tr>
+<tr valign="top"><td><code>table</code></td>
+<td>
+<p>The name of the table to read</p>
+</td></tr>
+<tr valign="top"><td><code>header</code></td>
+<td>
+<p>The argument <code>header</code> specifies if the first row
+should be interpreted as column names. The default value is <code>TRUE</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>rownames</code></td>
+<td>
+<p>Index (<code>numeric</code>) or name (<code>character</code>) of column that
+should be used as row names. The corresponding column will be removed from the data
+set. Defaults to <code>NULL</code> which means that no row names are applied.</p>
+</td></tr>
+<tr valign="top"><td><code>colTypes</code></td>
+<td>
+<p>Column types to use when reading in the data. Specified as a <code>character</code>
+vector of the corresponding type names (see <code><a href="XLC.html">XLC</a></code>; <code>XLC$DATA_TYPE.&lt;?&gt;</code>). You
+may also use R class names such as <code>numeric</code>, <code>character</code>, <code>logical</code> and <code>POSIXt</code>.
+The types are applied in the given order to the columns - elements are recycled if necessary.
+Defaults to <code>character(0)</code> meaning that column types are determined automatically (see the
+Note section for more information).<br />
+By default, type conversions are only applied if the specified column type is a more generic type
+(e.g. from Numeric to String) - otherwise <code>NA</code> is returned. The <code>forceConversion</code> flag can be
+set to force conversion into less generic types where possible.</p>
+</td></tr>
+<tr valign="top"><td><code>forceConversion</code></td>
+<td>
+<p><code>logical</code> specifying if conversions to less generic types should be
+forced. Defaults to <code>FALSE</code> meaning that if a column is specified
+to be of a certain type via the <code>colTypes</code> argument and a more generic type is detected in
+the column, then <code>NA</code> will be returned (example: column is specified to be DateTime but a
+more generic String is found). Specifying <code>forceConversion = TRUE</code> will try to enforce a
+conversion - if it succeeds the corresponding (converted) value will be returned, otherwise
+<code>NA</code>. See the Note section for some additional information.</p>
+</td></tr>
+<tr valign="top"><td><code>dateTimeFormat</code></td>
+<td>
+<p>Date/time format used when doing date/time conversions. Defaults to<br />
+<code>getOption("XLConnect.dateTimeFormat")</code>. This should be a POSIX format specifier according
+to <code><a href="../../base/html/strptime.html">strptime</a></code> although not all specifications have been implemented yet - the most
+important ones however are available.</p>
+</td></tr>
+<tr valign="top"><td><code>check.names</code></td>
+<td>
+<p><code>logical</code> specifying if column names of the resulting <code>data.frame</code>
+should be checked to ensure that they are syntactically valid valid variable names and are not
+duplicated. See the <code>check.names</code> argument of <code><a href="../../base/html/data.frame.html">data.frame</a></code>. Defaults to <code>TRUE</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>useCachedValues</code></td>
+<td>
+<p><code>logical</code> specifying whether to read cached formula results from the 
+workbook instead of re-evaluating them. This is particularly helpful in cases for reading data
+produced by Excel features not supported in XLConnect like references to external workbooks. 
+Defaults to <code>FALSE</code>, which means that formulas will be evaluated by XLConnect.</p>
+</td></tr>
+<tr valign="top"><td><code>keep</code></td>
+<td>
+<p>List of column names or indices to be kept in the output data frame.
+It is possible to specify either <code>keep</code> or <code>drop</code>, but not both at the same time. 
+Defaults to <code>NULL</code>. If a vector is passed as argument, it will be wrapped into a list.
+This list gets replicated to match the length of the other arguments.</p>
+</td></tr>
+<tr valign="top"><td><code>drop</code></td>
+<td>
+<p>List of column names or indices to be dropped in the output data frame.
+It is possible to specify either <code>keep</code> or <code>drop</code>, but not both at the same time.
+Defaults to <code>NULL</code>. If a vector is passed as argument, it will be wrapped into a list.
+This list gets replicated to match the length of the other arguments.</p>
+</td></tr>
+<tr valign="top"><td><code>simplify</code></td>
+<td>
+<p><code>logical</code> specifying if the result should be simplified, e.g. in case the <code>data.frame</code>
+would only have one row or one column (and data types match). Simplifying here is identical to calling <code>unlist</code>
+on the otherwise resulting <code>data.frame</code> (using <code>use.names = FALSE</code>). The default is <code>FALSE</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>readStrategy</code></td>
+<td>
+<p><code>character</code> specifying the reading strategy to use. Currently supported strategies are:
+</p>
+
+<ul>
+<li> <p><code>"default"</code> (default): Can handle all supported data types incl. date/time values and can deal 
+directly with missing value identifiers (see <code><a href="setMissingValue-methods.html">setMissingValue</a></code>)
+</p>
+</li>
+<li> <p><code>"fast"</code>: Increased read performance. Date/time values are read as numeric (number of days since 1900-01-01; 
+fractional days represent hours, minutes, and seconds) and only blank cells are recognized as missing (missing value 
+identifiers as set in <code><a href="setMissingValue-methods.html">setMissingValue</a></code> are ignored)
+</p>
+</li></ul>
+</td></tr>
+</table>
+
+
+<h3>Note</h3>
+
+<p>If no specific column types (see argument <code>colTypes</code>) are specified,
+<code>readNamedRegion</code> tries to determine the resulting column types
+based on the read cell types. If different cell types are found in a
+specific column, the most general of those is used and mapped to the
+corresponding R data type. The order of data types from least to most
+general is Boolean (<code>logical</code>) &lt; DateTime (<code>POSIXct</code>) &lt;
+Numeric (<code>numeric</code>) &lt; String (<code>character</code>). E.g. if a column
+is read that contains cells of type Boolean, Numeric and String then the
+resulting column in R would be <code>character</code> since <code>character</code>
+is the most general type.<br /><br />
+Some additional information with respect to forcing data type conversion
+using <code>forceConversion = TRUE</code>:
+</p>
+
+<ul>
+<li><p> Forcing conversion from String to Boolean: <code>TRUE</code> is returned
+if and only if the target string is &quot;true&quot; (ignoring any capitalization).
+Any other string will return <code>FALSE</code>.
+</p>
+</li>
+<li><p> Forcing conversion from Numeric to DateTime: since Excel understands
+Dates/Times as Numerics with some additional formatting, a conversion from
+a Numeric to a DateTime is actually possible. Numerics in this case represent
+the number of days since 1900-01-01. Fractional days represent hours, minutes, 
+and seconds.
+</p>
+</li></ul>
+
+
+
+<h3>Author(s)</h3>
+
+<p>Martin Studer<br />
+Mirai Solutions GmbH <a href="http://www.mirai-solutions.com">http://www.mirai-solutions.com</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>Overview of Excel tables<br />
+<a href="http://office.microsoft.com/en-001/excel-help/overview-of-excel-tables-HA010048546.aspx">http://office.microsoft.com/en-001/excel-help/overview-of-excel-tables-HA010048546.aspx</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="workbook-class.html">workbook</a></code>,
+<code><a href="readNamedRegion-methods.html">readNamedRegion</a></code>,
+<code><a href="readWorksheet-methods.html">readWorksheet</a></code>,
+<code><a href="writeNamedRegion-methods.html">writeNamedRegion</a></code>,<br />
+<code><a href="writeWorksheet-methods.html">writeWorksheet</a></code>,
+<code><a href="readNamedRegionFromFile.html">readNamedRegionFromFile</a></code>,
+<code><a href="onErrorCell-methods.html">onErrorCell</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+# mtcars xlsx file from demoFiles subfolder of package XLConnect
+demoExcelFile &lt;- system.file("demoFiles/mtcars.xlsx", package = "XLConnect")
+
+# Load workbook
+wb &lt;- loadWorkbook(demoExcelFile)
+
+# Read table 'MtcarsTable' from sheet 'mtcars_table'
+data &lt;- readTable(wb, sheet = "mtcars_table", table = "MtcarsTable")
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>XLConnect</em> version 0.2-13 <a href="00Index.html">Index</a>]</div>
+</body></html>

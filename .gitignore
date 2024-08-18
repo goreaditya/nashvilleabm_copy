@@ -1,0 +1,9 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+**/regression_results_*/
+*.Rdata
+*_test*
+**/DaySimSummaries_regress/daysim_output_config.R
+**/outputs

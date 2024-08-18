@@ -1,0 +1,85 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Querying available Excel tables in a workbook</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for getTables-methods {XLConnect}"><tr><td>getTables-methods {XLConnect}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Querying available Excel tables in a workbook</h2>
+
+<h3>Description</h3>
+
+<p>Queries the available Excel tables on the specified worksheet.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+## S4 method for signature 'workbook,numeric'
+getTables(object,sheet,simplify)
+## S4 method for signature 'workbook,character'
+getTables(object,sheet,simplify)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>object</code></td>
+<td>
+<p>The <code><a href="workbook-class.html">workbook</a></code> to use</p>
+</td></tr>
+<tr valign="top"><td><code>sheet</code></td>
+<td>
+<p>Index (<code>integer</code>) or name (<code>character</code>) of worksheet to query</p>
+</td></tr>
+<tr valign="top"><td><code>simplify</code></td>
+<td>
+<p><code>logical</code> specifying if the result should be simplified (defaults
+to <code>TRUE</code>). See details.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>Since this is a vectorized function (multiple sheets can be specified) the result is a
+named list (one component per sheet) if no simplification is applied. In cases where only 
+one sheet is queried and <code>simplify = TRUE</code> (default) the result is simplified to a
+vector.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Martin Studer<br />
+Mirai Solutions GmbH <a href="http://www.mirai-solutions.com">http://www.mirai-solutions.com</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="workbook-class.html">workbook</a></code>, <code><a href="getSheets-methods.html">getSheets</a></code>,
+<code><a href="readTable-methods.html">readTable</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+# mtcars xlsx file from demoFiles subfolder of package XLConnect
+demoExcelFile &lt;- system.file("demoFiles/mtcars.xlsx", package = "XLConnect")
+
+# Load workbook
+wb &lt;- loadWorkbook(demoExcelFile)
+
+# Query available tables (table names) on sheet 'mtcars_table'
+tables &lt;- getTables(wb, sheet = "mtcars_table")
+
+# ... or via sheet index
+tables &lt;- getTables(wb, sheet = 4)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>XLConnect</em> version 0.2-13 <a href="00Index.html">Index</a>]</div>
+</body></html>

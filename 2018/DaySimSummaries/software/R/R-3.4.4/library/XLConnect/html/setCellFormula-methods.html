@@ -1,0 +1,109 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Setting cell formulas</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for setCellFormula-methods {XLConnect}"><tr><td>setCellFormula-methods {XLConnect}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Setting cell formulas</h2>
+
+<h3>Description</h3>
+
+<p>Sets cell formulas for specific cells in a <code><a href="workbook-class.html">workbook</a></code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+## S4 method for signature 'workbook,character'
+setCellFormula(object,sheet,row,col,formula)
+## S4 method for signature 'workbook,numeric'
+setCellFormula(object,sheet,row,col,formula)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>object</code></td>
+<td>
+<p>The <code><a href="workbook-class.html">workbook</a></code> to use</p>
+</td></tr>
+<tr valign="top"><td><code>sheet</code></td>
+<td>
+<p>Name or index of the sheet the cell is on</p>
+</td></tr>
+<tr valign="top"><td><code>row</code></td>
+<td>
+<p>Row index of the cell to edit</p>
+</td></tr>
+<tr valign="top"><td><code>col</code></td>
+<td>
+<p>Column index of the cell to edit</p>
+</td></tr>
+<tr valign="top"><td><code>formula</code></td>
+<td>
+<p>The formula to apply to the cell, without the initial 
+<code>=</code> character used in Excel</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>Note that the arguments are vectorized such that multiple cells can be set with
+one method call. 
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Martin Studer<br />
+Mirai Solutions GmbH <a href="http://www.mirai-solutions.com">http://www.mirai-solutions.com</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="workbook-class.html">workbook</a></code>,
+<code><a href="getCellFormula-methods.html">getCellFormula</a></code>,
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+# Load workbook (create if not existing)
+wb &lt;- loadWorkbook("setCellFormula.xls", create = TRUE)
+
+# Create a sheet named 'mtcars'
+createSheet(wb, name = "mtcars")
+
+# Create a named region called 'mtcars' referring to the sheet
+# called 'mtcars'
+createName(wb, name = "mtcars", formula = "mtcars!$A$1")
+
+# Write built-in data set 'mtcars' to the above defined named region.
+writeNamedRegion(wb, mtcars, name = "mtcars")
+
+# Now, let us get Excel to calculate average weights.
+# Where did we write the dataset?
+corners &lt;- getReferenceCoordinatesForName(wb, "mtcars")
+# Put the average under the wt column
+colIndex &lt;- which(names(mtcars) == "wt") 
+rowIndex &lt;- corners[2,1] + 1
+
+# Construct the input range &amp; formula
+input &lt;- paste(idx2cref(c(corners[1,1], colIndex, 
+                          corners[2,1], colIndex)), collapse=":")
+formula &lt;- paste("AVERAGE(", input, ")", sep="") 
+            
+setCellFormula(wb, "mtcars", rowIndex, colIndex, formula)
+
+# Save workbook (this actually writes the file to disk)
+saveWorkbook(wb)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>XLConnect</em> version 0.2-13 <a href="00Index.html">Index</a>]</div>
+</body></html>

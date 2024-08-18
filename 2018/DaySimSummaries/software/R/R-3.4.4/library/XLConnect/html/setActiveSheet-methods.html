@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Setting the active worksheet in a workbook</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for setActiveSheet-methods {XLConnect}"><tr><td>setActiveSheet-methods {XLConnect}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Setting the active worksheet in a workbook</h2>
+
+<h3>Description</h3>
+
+<p>Sets the active worksheet of a <code><a href="workbook-class.html">workbook</a></code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+## S4 method for signature 'workbook,character'
+setActiveSheet(object,sheet)
+## S4 method for signature 'workbook,numeric'
+setActiveSheet(object,sheet)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>object</code></td>
+<td>
+<p>The <code><a href="workbook-class.html">workbook</a></code> to use</p>
+</td></tr>
+<tr valign="top"><td><code>sheet</code></td>
+<td>
+<p>The name or index of the sheet to activate</p>
+</td></tr>
+</table>
+
+
+<h3>Note</h3>
+
+<p>The active worksheet of a <code><a href="workbook-class.html">workbook</a></code> is the worksheet that is displayed
+when the corresponding Excel file is opened.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Martin Studer<br />
+Mirai Solutions GmbH <a href="http://www.mirai-solutions.com">http://www.mirai-solutions.com</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="workbook-class.html">workbook</a></code>, <code><a href="createSheet-methods.html">createSheet</a></code>,
+<code><a href="removeSheet-methods.html">removeSheet</a></code>, <code><a href="renameSheet-methods.html">renameSheet</a></code>,
+<code><a href="existsSheet-methods.html">existsSheet</a></code>, <code><a href="getSheets-methods.html">getSheets</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+# mtcars xlsx file from demoFiles subfolder of package XLConnect
+mtcarsFile &lt;- system.file("demoFiles/mtcars.xlsx", package = "XLConnect")
+
+# Load workbook
+wb &lt;- loadWorkbook(mtcarsFile)
+
+# Sets the active sheet to the sheet 'mtcars3'
+setActiveSheet(wb, sheet = "mtcars3")
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>XLConnect</em> version 0.2-13 <a href="00Index.html">Index</a>]</div>
+</body></html>

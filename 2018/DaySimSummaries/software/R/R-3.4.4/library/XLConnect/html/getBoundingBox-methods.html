@@ -1,0 +1,115 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Querying the coordinates of a worksheet bounding box</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for getBoundingBox-methods {XLConnect}"><tr><td>getBoundingBox-methods {XLConnect}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Querying the coordinates of a worksheet bounding box</h2>
+
+<h3>Description</h3>
+
+<p>This function queries the coordinates of a bounding box in an Excel worksheet. A bounding box is the rectangular region of minimum size containing all the non-empty cells in a sheet.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+## S4 method for signature 'workbook,character'
+getBoundingBox(object,sheet,startRow,startCol,endRow,endCol,autofitRow,autofitCol)
+## S4 method for signature 'workbook,numeric'
+getBoundingBox(object,sheet,startRow,startCol,endRow,endCol,autofitRow,autofitCol)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>object</code></td>
+<td>
+<p>The <code><a href="workbook-class.html">workbook</a></code> to use</p>
+</td></tr>
+<tr valign="top"><td><code>sheet</code></td>
+<td>
+<p>The name or index of the sheet from which to get the bounding box</p>
+</td></tr>
+<tr valign="top"><td><code>startRow</code></td>
+<td>
+<p>Start reference row for the bounding box. Defaults to <code>0</code> meaning that the start row is determined automatically.</p>
+</td></tr>
+<tr valign="top"><td><code>startCol</code></td>
+<td>
+<p>Start reference column for the bounding box. Defaults to <code>0</code> meaning that the start column is determined automatically.</p>
+</td></tr>
+<tr valign="top"><td><code>endRow</code></td>
+<td>
+<p>End reference row for the bounding box. Defaults to <code>0</code> meaning that the end row is determined automatically.</p>
+</td></tr>
+<tr valign="top"><td><code>endCol</code></td>
+<td>
+<p>End reference column for the bounding box. Defaults to <code>0</code> meaning that the end column is determined automatically.</p>
+</td></tr>
+<tr valign="top"><td><code>autofitRow</code></td>
+<td>
+<p><code>logical</code> specifying if leading and trailing empty rows should be
+skipped. Defaults to <code>TRUE</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>autofitCol</code></td>
+<td>
+<p><code>logical</code> specifying if leading and trailing empty columns should be skipped. Defaults to <code>TRUE</code>.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>The result is a <code>matrix</code> containing the following coordinates:<br />
+<code>[1,]</code>  top left row<br />
+<code>[2,]</code>  top left column<br />
+<code>[3,]</code>  bottom right row<br />
+<code>[4,]</code>  bottom right column<br />
+<br />
+In case more than one <code>sheet</code> is selected, the result <code>matrix</code> will contain a column for each sheet.<br /><br />
+</p>
+<p>The bounding box resolution algorithm works as follows:<br />
+If <code>startRow &lt;= 0</code> then the first available row in the sheet is assumed. 
+If <code>endRow &lt;= 0</code> then the last available row in the sheet is assumed.
+If <code>startCol &lt;= 0</code> then the minimum column between <code>startRow</code> and
+<code>endRow</code> is assumed. If <code>endCol &lt;= 0</code> then the maximum column between
+<code>startRow</code> and <code>endRow</code> is assumed.
+The arguments <code>autofitRow</code> and <code>autofitCol</code> (both defaulting to <code>TRUE</code>) can be used to skip leading and trailing empty rows even in case <code>startRow</code>, <code>endRow</code>, <code>startCol</code> and <code>endCol</code> are specified to values <code>&gt; 0</code>. This can be useful if data is expected within certain given boundaries but the exact location is not available.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Nicola Lambiase<br />
+Mirai Solutions GmbH <a href="http://www.mirai-solutions.com">http://www.mirai-solutions.com</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="workbook-class.html">workbook</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+# multiregion xlsx file from demoFiles subfolder of package XLConnect
+demoExcelFile &lt;- system.file("demoFiles/multiregion.xlsx", package = "XLConnect")
+
+# Load workbook
+wb &lt;- loadWorkbook(demoExcelFile)
+
+# Query bounding box for the second sheet
+print(getBoundingBox(wb, sheet="SecondSheet"))
+
+# Query bounding box for the first sheet, selecting the columns from 5 to 8
+print(getBoundingBox(wb, sheet="FirstSheet", startCol=5, endCol=8))
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>XLConnect</em> version 0.2-13 <a href="00Index.html">Index</a>]</div>
+</body></html>

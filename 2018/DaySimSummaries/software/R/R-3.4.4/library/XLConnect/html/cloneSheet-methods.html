@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Cloning/copying worksheets</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for cloneSheet-methods {XLConnect}"><tr><td>cloneSheet-methods {XLConnect}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Cloning/copying worksheets</h2>
+
+<h3>Description</h3>
+
+<p>Clones (copies) a worksheet in a <code><a href="workbook-class.html">workbook</a></code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+## S4 method for signature 'workbook,numeric'
+cloneSheet(object,sheet,name)
+## S4 method for signature 'workbook,character'
+cloneSheet(object,sheet,name)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>object</code></td>
+<td>
+<p>The <code><a href="workbook-class.html">workbook</a></code> to use</p>
+</td></tr>
+<tr valign="top"><td><code>sheet</code></td>
+<td>
+<p>The name or index of the worksheet to clone</p>
+</td></tr>
+<tr valign="top"><td><code>name</code></td>
+<td>
+<p>The name to assign to the cloned worksheet. Throws an exception if the name to assign
+is the name of an already existing worksheet.</p>
+</td></tr>
+</table>
+
+
+<h3>Author(s)</h3>
+
+<p>Martin Studer<br />
+Mirai Solutions GmbH <a href="http://www.mirai-solutions.com">http://www.mirai-solutions.com</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="workbook-class.html">workbook</a></code>, <code><a href="createSheet-methods.html">createSheet</a></code>,
+<code><a href="removeSheet-methods.html">removeSheet</a></code>, <code><a href="renameSheet-methods.html">renameSheet</a></code>,
+<code><a href="getSheets-methods.html">getSheets</a></code>, <code><a href="existsSheet-methods.html">existsSheet</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+# mtcars xlsx file from demoFiles subfolder of package XLConnect
+demoExcelFile &lt;- system.file("demoFiles/mtcars.xlsx", package = "XLConnect")
+
+# Load workbook
+wb &lt;- loadWorkbook(demoExcelFile)
+
+# Clone the 'mtcars' worksheet and assign it the name 'mtcars cloned'
+cloneSheet(wb, sheet = "mtcars", name = "mtcars cloned")
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>XLConnect</em> version 0.2-13 <a href="00Index.html">Index</a>]</div>
+</body></html>

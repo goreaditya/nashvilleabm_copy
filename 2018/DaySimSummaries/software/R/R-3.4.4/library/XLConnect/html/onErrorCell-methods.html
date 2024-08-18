@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Behavior when error cells are detected</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for onErrorCell-methods {XLConnect}"><tr><td>onErrorCell-methods {XLConnect}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2> Behavior when error cells are detected </h2>
+
+<h3>Description</h3>
+
+<p>This function defines the behavior when reading data from a worksheet and error cells
+are detected.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+## S4 method for signature 'workbook'
+onErrorCell(object,behavior)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>object</code></td>
+<td>
+<p>The <code><a href="workbook-class.html">workbook</a></code> to use</p>
+</td></tr>
+<tr valign="top"><td><code>behavior</code></td>
+<td>
+<p>The behavior to follow when an error cell is detected. This is normally
+specified by a corresponding <code><a href="XLC.html">XLC</a></code> error constant, i.e. either
+<code>XLC$"ERROR.WARN"</code> or <code>XLC$"ERROR.STOP"</code>. <code>XLC$"ERROR.WARN"</code> means the
+error cell will be read as missing value (<code>NA</code>) and a corresponding warning will be
+generated (this is the default behavior). <code>XLC$"ERROR.STOP"</code> means that an exception
+will be thrown and further execution will be stopped immediately.
+</p>
+</td></tr>
+</table>
+
+
+<h3>Author(s)</h3>
+
+<p>Martin Studer<br />
+Mirai Solutions GmbH <a href="http://www.mirai-solutions.com">http://www.mirai-solutions.com</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="workbook-class.html">workbook</a></code>, <code><a href="readNamedRegion-methods.html">readNamedRegion</a></code>,
+<code><a href="readNamedRegionFromFile.html">readNamedRegionFromFile</a></code>, <code><a href="readWorksheet-methods.html">readWorksheet</a></code>,<br />
+<code><a href="readWorksheetFromFile.html">readWorksheetFromFile</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+# errorCell xlsx file from demoFiles subfolder of package XLConnect
+demoExcelFile &lt;- system.file("demoFiles/errorCell.xlsx", 
+							  package = "XLConnect")
+
+# Load workbook
+wb &lt;- loadWorkbook(demoExcelFile)
+
+# Set error behavior to XLC$ERROR.WARN when detecting error cells
+# Note: this is the default behavior
+onErrorCell(wb, XLC$ERROR.WARN)
+# Alternatively: wb$onErrorCell(XLC$ERROR.WARN)
+
+# Read named region 'MyData' (with default header = TRUE)
+data &lt;- readNamedRegion(wb, name = "MyData")
+
+# Now set error behavior to XLC$ERROR.STOP to immediately
+# issue an exception and stop in case an error cell is
+# detected
+onErrorCell(wb, XLC$ERROR.STOP)
+# Alternatively: wb$onErrorCell(XLC$ERROR.STOP)
+
+# Read (again) named region 'MyData' (with default header = TRUE)
+res &lt;- try(readNamedRegion(wb, name = "MyData"))
+# Did we get an error?
+print(is(res, "try-error"))
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>XLConnect</em> version 0.2-13 <a href="00Index.html">Index</a>]</div>
+</body></html>

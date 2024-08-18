@@ -1,0 +1,110 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Creating a freeze pane on a worksheet</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for createFreezePane-methods {XLConnect}"><tr><td>createFreezePane-methods {XLConnect}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Creating a freeze pane on a worksheet</h2>
+
+<h3>Description</h3>
+
+<p>Creates a freeze pane on a specified worksheet.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+## S4 method for signature 'workbook,character'
+createFreezePane(object, sheet, colSplit, rowSplit, leftColumn, topRow)
+## S4 method for signature 'workbook,numeric'
+createFreezePane(object, sheet, colSplit, rowSplit, leftColumn, topRow)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>object</code></td>
+<td>
+<p>The <code><a href="workbook-class.html">workbook</a></code> to use</p>
+</td></tr>
+<tr valign="top"><td><code>sheet</code></td>
+<td>
+<p>The name or index of the sheet on which to create a freeze pane</p>
+</td></tr>
+<tr valign="top"><td><code>colSplit</code></td>
+<td>
+<p>Horizontal position of freeze (as column index or name)</p>
+</td></tr>
+<tr valign="top"><td><code>rowSplit</code></td>
+<td>
+<p>Vertical position of freeze (as number of rows)</p>
+</td></tr>
+<tr valign="top"><td><code>leftColumn</code></td>
+<td>
+<p>Left column (as column index or name) visible in right pane. If not specified, the default is <code>leftColumn</code>=<code>colSplit</code></p>
+</td></tr>
+<tr valign="top"><td><code>topRow</code></td>
+<td>
+<p>Top row (as index) visible in bottom pane. If not specified, the default is <code>topRow</code>=<code>rowSplit</code></p>
+</td></tr>
+</table>
+
+
+<h3>Note</h3>
+
+<p>To keep an area of a worksheet visible while you scroll to another area of the worksheet,
+you can lock specific rows or columns in one area by freezing or splitting panes.
+</p>
+<p>When you freeze panes, you keep specific rows or columns visible when you scroll in the worksheet.
+For example, you might want to keep row and column labels visible as you scroll.
+</p>
+<p>When you split panes, you create separate worksheet areas that you can scroll within,
+while rows or columns in the non-scrolled area remain visible.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Nicola Lambiase<br />
+Mirai Solutions GmbH <a href="http://www.mirai-solutions.com">http://www.mirai-solutions.com</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>How to create a freeze pane/split pane in Office 2007
+<a href="http://office.microsoft.com/en-us/excel-help/freeze-or-lock-rows-and-columns-HP001217048.aspx">http://office.microsoft.com/en-us/excel-help/freeze-or-lock-rows-and-columns-HP001217048.aspx</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="workbook-class.html">workbook</a></code>
+<code><a href="createSplitPane-methods.html">createSplitPane</a></code>
+<code><a href="removePane-methods.html">removePane</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+# Load workbook (create if not existing)
+wb &lt;- loadWorkbook("freezePaneTest.xlsx", create = TRUE)
+
+# Create a worksheet named 'Sheet1'
+createSheet(wb, name = "Sheet1")
+
+# Create a freeze pane on Sheet1, using as reference position the 5th column and the 5th row,
+# showing the 10th column as the leftmost visible one in the right pane
+# and the 10th row as the top visible one in the bottom pane.
+createFreezePane(wb, "Sheet1", 5, 5, 10, 10)
+
+# Save workbook (this actually writes the file to disk)
+saveWorkbook(wb)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>XLConnect</em> version 0.2-13 <a href="00Index.html">Index</a>]</div>
+</body></html>

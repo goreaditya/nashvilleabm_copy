@@ -1,0 +1,104 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Editing data sets in an Excel file editor</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for xlcEdit {XLConnect}"><tr><td>xlcEdit {XLConnect}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>
+Editing data sets in an Excel file editor
+</h2>
+
+<h3>Description</h3>
+
+<p>Provides the capability to edit an object/data.frame in an Excel file
+editor. After editing, the object is restored in the R session with the
+corresponding changes.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+xlcEdit(obj, pos = globalenv(), ext = ".xlsx")
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>obj</code></td>
+<td>
+
+<p>Object (<code>data.frame</code>) to edit.
+</p>
+</td></tr>
+<tr valign="top"><td><code>pos</code></td>
+<td>
+
+<p>Where to look for the object specified by <code>obj</code>.
+See <code>pos</code> argument of <code><a href="../../base/html/get.html">get</a></code> for more
+information.
+</p>
+</td></tr>
+<tr valign="top"><td><code>ext</code></td>
+<td>
+
+<p>Extension to use for the Excel file being created. Defaults
+to &quot;.xlsx&quot;.
+</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>This function uses <code><a href="xlcDump.html">xlcDump</a></code> and <code><a href="xlcRestore.html">xlcRestore</a></code> to
+dump objects to and restore objects from Excel files. An OS command is invoked
+to open the temporary Excel file in the default editor. Changes to the file have 
+to be saved in order for them to take effect in the restored object.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Invisibly returns the value of the <code><a href="xlcRestore.html">xlcRestore</a></code> operation.
+</p>
+
+
+<h3>Note</h3>
+
+<p>This function only works under Windows and MacOS with a corresponding Excel
+file editor, e.g. MS Excel or LibreOffice. Attempts to use this function under
+another OS will result in an error being thrown.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Martin Studer<br />
+Mirai Solutions GmbH <a href="http://www.mirai-solutions.com">http://www.mirai-solutions.com</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="xlcDump.html">xlcDump</a></code>, <code><a href="xlcRestore.html">xlcRestore</a></code>, 
+<code><a href="writeNamedRegion-methods.html">writeNamedRegion</a></code>, 
+<code><a href="writeWorksheet-methods.html">writeWorksheet</a></code>, <code><a href="writeNamedRegionToFile.html">writeNamedRegionToFile</a></code>,
+<code><a href="writeWorksheetToFile.html">writeWorksheetToFile</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+## Not run: 
+myObj = mtcars
+xlcEdit(myObj)
+
+## End(Not run)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>XLConnect</em> version 0.2-13 <a href="00Index.html">Index</a>]</div>
+</body></html>

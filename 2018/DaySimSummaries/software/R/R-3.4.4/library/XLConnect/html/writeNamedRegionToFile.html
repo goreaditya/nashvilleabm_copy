@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Writing named regions to an Excel file (wrapper function)</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for writeNamedRegionToFile {XLConnect}"><tr><td>writeNamedRegionToFile {XLConnect}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Writing named regions to an Excel file (wrapper function)</h2>
+
+<h3>Description</h3>
+
+<p>Writes named regions to an Excel file.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+writeNamedRegionToFile(file, data, name, formula=NA, ...,
+styleAction = XLC$STYLE_ACTION.XLCONNECT, clearNamedRegions=FALSE)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>file</code></td>
+<td>
+<p>The path name of the file to write to</p>
+</td></tr>
+<tr valign="top"><td><code>data</code></td>
+<td>
+<p>Data to write</p>
+</td></tr>
+<tr valign="top"><td><code>name</code></td>
+<td>
+<p>Name of the named region to write to</p>
+</td></tr>
+<tr valign="top"><td><code>formula</code></td>
+<td>
+<p>If formula is specified, each item defines the formula of
+the named region identified by the corresponding entry of
+<code>name</code>. Use this if you want to create the document from scratch
+instead of writing to a template!</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>Additional arguments passed to <code><a href="writeNamedRegion-methods.html">writeNamedRegion</a></code></p>
+</td></tr>
+<tr valign="top"><td><code>styleAction</code></td>
+<td>
+<p>Style action to be used when writing the data.<br />
+The default is <code>XLC$STYLE_ACTION.XLCONNECT</code>. 
+See <code><a href="setStyleAction-methods.html">setStyleAction</a></code> for more information.</p>
+</td></tr>
+<tr valign="top"><td><code>clearNamedRegions</code></td>
+<td>
+<p>TRUE to clear content of existing named regions before writing data</p>
+</td></tr>
+</table>
+
+
+<h3>Author(s)</h3>
+
+<p>Thomas Themel<br />
+Mirai Solutions GmbH <a href="http://www.mirai-solutions.com">http://www.mirai-solutions.com</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="writeNamedRegion-methods.html">writeNamedRegion</a></code>,
+<code><a href="writeWorksheetToFile.html">writeWorksheetToFile</a></code>,
+<code><a href="readNamedRegionFromFile.html">readNamedRegionFromFile</a></code>,<br />
+<code><a href="readWorksheetFromFile.html">readWorksheetFromFile</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+# multiregion xlsx file from demoFiles subfolder of package XLConnect
+demoExcelFile &lt;- system.file("demoFiles/multiregion.xlsx", 
+                             package = "XLConnect")
+
+template &lt;- "template-ws.xlsx"
+file.copy(demoExcelFile, template) 
+
+# Write single data.frame to a named region in an existing file
+writeNamedRegionToFile(template, name = "Iris", iris)
+
+# Write to a new file, defining the sheet and named region as we write.
+# Format according to XLConnect defaults
+writeNamedRegionToFile("iris.xlsx", name = "Iris", data = iris,
+                       formula = "IrisData!$C$4", 
+                       styleAction = "XLCONNECT")
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>XLConnect</em> version 0.2-13 <a href="00Index.html">Index</a>]</div>
+</body></html>

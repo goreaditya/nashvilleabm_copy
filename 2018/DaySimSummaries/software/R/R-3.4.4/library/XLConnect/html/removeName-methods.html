@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Removing names from workbooks</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for removeName-methods {XLConnect}"><tr><td>removeName-methods {XLConnect}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Removing names from workbooks</h2>
+
+<h3>Description</h3>
+
+<p>Removes a name from a <code><a href="workbook-class.html">workbook</a></code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+## S4 method for signature 'workbook'
+removeName(object,name)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>object</code></td>
+<td>
+<p>The <code><a href="workbook-class.html">workbook</a></code> to use</p>
+</td></tr>
+<tr valign="top"><td><code>name</code></td>
+<td>
+<p>The name to delete</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>Removes the name named <code>name</code> from the specified workbook
+<code>object</code> if it does exist. Multiple names can be specified to be removed.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Martin Studer<br />
+Mirai Solutions GmbH <a href="http://www.mirai-solutions.com">http://www.mirai-solutions.com</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="workbook-class.html">workbook</a></code>,
+<code><a href="createName-methods.html">createName</a></code>,
+<code><a href="existsName-methods.html">existsName</a></code>,<br />
+<code><a href="getDefinedNames-methods.html">getDefinedNames</a></code>,
+<code><a href="readNamedRegion-methods.html">readNamedRegion</a></code>,
+<code><a href="writeNamedRegion-methods.html">writeNamedRegion</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+# mtcars xlsx file from demoFiles subfolder of package XLConnect
+mtcarsFile &lt;- system.file("demoFiles/mtcars.xlsx", package = "XLConnect")
+
+# Load workbook
+wb &lt;- loadWorkbook(mtcarsFile)
+
+# Remove the named region called 'mtcars' from the above file
+# (this named region is defined as 'mtcars!$A$1:$K$33')
+removeName(wb, name = "mtcars")
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>XLConnect</em> version 0.2-13 <a href="00Index.html">Index</a>]</div>
+</body></html>

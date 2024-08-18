@@ -1,0 +1,110 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Creating names in a workbook</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for createName-methods {XLConnect}"><tr><td>createName-methods {XLConnect}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Creating names in a workbook</h2>
+
+<h3>Description</h3>
+
+<p>Creates a name for a specified formula in a <code><a href="workbook-class.html">workbook</a></code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+## S4 method for signature 'workbook'
+createName(object, name, formula, overwrite)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>object</code></td>
+<td>
+<p>The <code><a href="workbook-class.html">workbook</a></code> to use</p>
+</td></tr>
+<tr valign="top"><td><code>name</code></td>
+<td>
+<p>The name's name to create</p>
+</td></tr>
+<tr valign="top"><td><code>formula</code></td>
+<td>
+<p>Excel formula specifying the name</p>
+</td></tr>
+<tr valign="top"><td><code>overwrite</code></td>
+<td>
+<p>If a name with the same <code>name</code> already exists
+and <code>overwrite = TRUE</code>, then this name is removed first before
+the new one is created. If a name already exists and
+<code>overwrite = FALSE</code>, then an exception is thrown. The default
+value for <code>overwrite</code> is <code>FALSE</code>.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>Creates a name named <code>name</code> for the specified <code>formula</code>. 
+</p>
+<p>The <code>formula</code> should be specified as you would type it
+in Excel. Make sure that the worksheets, functions, ...
+exist that you are referring to in the <code>formula</code>.
+</p>
+<p>The <code>name</code>, <code>formula</code> and <code>overwrite</code> arguments are
+vectorized such that multiple names can be created in one method call.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Martin Studer<br />
+Mirai Solutions GmbH <a href="http://www.mirai-solutions.com">http://www.mirai-solutions.com</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>What are named regions/ranges?<br />
+<a href="http://www.officearticles.com/excel/named_ranges_in_microsoft_excel.htm">http://www.officearticles.com/excel/named_ranges_in_microsoft_excel.htm</a><br />
+How to create named regions/ranges?<br />
+<a href="http://www.youtube.com/watch?v=iAE9a0uRtpM">http://www.youtube.com/watch?v=iAE9a0uRtpM</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="workbook-class.html">workbook</a></code>,
+<code><a href="removeName-methods.html">removeName</a></code>,
+<code><a href="existsName-methods.html">existsName</a></code>,
+<code><a href="getDefinedNames-methods.html">getDefinedNames</a></code>,<br />
+<code><a href="readNamedRegion-methods.html">readNamedRegion</a></code>,
+<code><a href="writeNamedRegion-methods.html">writeNamedRegion</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+# Load workbook (create if not existing)
+wb &lt;- loadWorkbook("createName.xlsx", create = TRUE)
+
+# Create a worksheet named 'mtcars'
+createSheet(wb, name = "mtcars")
+
+# Create a named region called 'mtcars' on the sheet called 'mtcars'
+createName(wb, name = "mtcars", formula = "mtcars!$A$1")
+
+# Write built-in data set 'mtcars' to the above defined named region
+writeNamedRegion(wb, mtcars, name = "mtcars")
+
+# Save workbook
+saveWorkbook(wb)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>XLConnect</em> version 0.2-13 <a href="00Index.html">Index</a>]</div>
+</body></html>

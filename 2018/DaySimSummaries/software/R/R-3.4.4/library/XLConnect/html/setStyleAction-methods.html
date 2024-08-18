@@ -1,0 +1,215 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Controlling application of cell styles when writing data to...</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for setStyleAction-methods {XLConnect}"><tr><td>setStyleAction-methods {XLConnect}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Controlling application of cell styles when writing data to Excel</h2>
+
+<h3>Description</h3>
+
+<p>Controls the application of <code><a href="cellstyle-class.html">cellstyle</a></code>s when writing data to Excel.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+## S4 method for signature 'workbook'
+setStyleAction(object,type)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>object</code></td>
+<td>
+<p>The <code><a href="workbook-class.html">workbook</a></code> to use</p>
+</td></tr>
+<tr valign="top"><td><code>type</code></td>
+<td>
+<p>Defines the style action to be used when writing data
+(<code><a href="writeNamedRegion-methods.html">writeNamedRegion</a></code>,
+<code><a href="writeWorksheet-methods.html">writeWorksheet</a></code>) to the
+specified workbook <code>object</code></p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>The following style actions are supported:<br />
+</p>
+
+<ul>
+<li> <p><code>XLC$"STYLE_ACTION.XLCONNECT"</code>: This is the
+default. <code>data.frame</code> headers (if specified to be written) are
+colored in solid light grey (25 percent). character, numeric and
+logical vectors are written using Excel's &quot;General&quot; data
+format. Time/date vectors e.g. <code>Date</code> or <code>POSIXt</code>) are
+written with the &quot;mm/dd/yyyy hh:mm:ss&quot; data format. All cells are
+specified to wrap the text if necessary. The corresponding custom cell
+styles are called <em>XLConnect.Header</em>, <em>XLConnect.String</em>,
+<em>XLConnect.Numeric</em>, <em>XLConnect.Boolean</em> and <em>XLConnect.Date</em>.
+</p>
+</li>
+<li> <p><code>XLC$"STYLE_ACTION.DATATYPE"</code>: This style action instructs
+<span class="pkg">XLConnect</span> to apply <code><a href="cellstyle-class.html">cellstyle</a></code>s per data type as
+set by the <code><a href="setCellStyleForType-methods.html">setCellStyleForType</a></code>
+methods. In contrast to the <code>XLC$"STYLE_ACTION.DATA_FORMAT_ONLY"</code>
+style action (see below) which only sets a data format to an existing
+cell style, this action actually sets a new <code><a href="cellstyle-class.html">cellstyle</a></code>.
+</p>
+</li>
+<li> <p><code>XLC$"STYLE_ACTION.NONE"</code>: This style action instructs
+<span class="pkg">XLConnect</span> to apply no cell styles when writing data. Cell styles
+are kept as they are. This is useful in a scenario where all styling is
+predefined in an Excel template which is then only filled with
+data.
+</p>
+</li>
+<li> <p><code>XLC$"STYLE_ACTION.PREDEFINED"</code>: This style action
+instructs <span class="pkg">XLConnect</span> to use existing (predefined) <code><a href="cellstyle-class.html">cellstyle</a></code>s when
+writing headers and columns. This is useful in a template-based approach
+where an Excel template with predefined <code><a href="cellstyle-class.html">cellstyle</a></code>s for headers and
+columns is available. Normally, this would be used when the column
+dimensions (and potentially also the row dimensions) of the data tables
+are known up-front and as such a layout and corresponding cell styles
+can be pre-specified.<br /> If a <code>data.frame</code> is written including
+its header, it is assumed that the Excel file being written to has
+predefined <code><a href="cellstyle-class.html">cellstyle</a></code>s in the header row. Furthermore, the first row of
+data is assumed to contain the cell styles to be replicated for any
+additional rows. As such, this style action may only be useful if the
+same column cell style should be applied across all rows. Please refer
+to the available demos for some examples.
+</p>
+</li>
+<li> <p><code>XLC$"STYLE_ACTION.NAME_PREFIX"</code>: This style action instructs
+<span class="pkg">XLConnect</span> to look for custom (named) <code><a href="cellstyle-class.html">cellstyle</a></code>s with a specified
+prefix when writing columns and headers. This style name prefix can be
+set via the method <code><a href="setStyleNamePrefix-methods.html">setStyleNamePrefix</a></code>.<br />
+</p>
+<p>For column headers, it first checks if there is a cell style named<br />
+<var>&lt;STYLE_NAME_PREFIX&gt;.Header.&lt;COLUMN_NAME&gt;</var>.<br /> If there is no
+such cell style,  it checks for a cell style named<br />
+<var>&lt;STYLE_NAME_PREFIX&gt;.Header.&lt;COLUMN_INDEX&gt;</var>.<br /> Again, if
+there is no such cell style, it checks for<br />
+<var>&lt;STYLE_NAME_PREFIX&gt;.Header</var><br /> (no specific column
+discrimination). As a final resort, it just takes the workbook default
+cell style.<br /> 
+</p>
+<p>For columns, <span class="pkg">XLConnect</span> first checks the availability of a cell
+style named<br /> <var>&lt;STYLE_NAME_PREFIX&gt;.Column.&lt;COLUMN_NAME&gt;</var>.<br /> If
+there is no such cell style, it checks for<br />
+<var>&lt;STYLE_NAME_PREFIX&gt;.Column.&lt;COLUMN_INDEX&gt;</var>.<br /> If again there
+is no such cell style, it checks for<br />
+<var>&lt;STYLE_NAME_PREFIX&gt;.Column.&lt;COLUMN_DATA_TYPE&gt;</var><br /> with
+<var>&lt;COLUMN_DATA_TYPE&gt;</var> being the corresponding data type from the
+set:  <var>{Numeric, String, Boolean, DateTime}</var>. As a last resort,
+it would make use of the workbook's default cell style.
+</p>
+</li>
+<li> <p><code>XLC$"STYLE_ACTION.DATA_FORMAT_ONLY"</code>: This style action instructs
+<span class="pkg">XLConnect</span> to only set the data format for a cell but not to apply any other
+styling but rather keep the existing one. The data format to apply is determined
+by the data type of the cell (which is in turn determined by the corresponding R data
+type). The data format for a specific type can be set via the method
+<code><a href="setDataFormatForType-methods.html">setDataFormatForType</a></code>. The default data format
+is &quot;General&quot; for the data types <var>Numeric</var>, <var>String</var> and <var>Boolean</var> and is
+&quot;mm/dd/yyyy hh:mm:ss&quot; for the data type <var>DateTime</var>.
+</p>
+</li></ul>
+
+
+<h3>Author(s)</h3>
+
+<p>Martin Studer<br />
+Mirai Solutions GmbH <a href="http://www.mirai-solutions.com">http://www.mirai-solutions.com</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="workbook-class.html">workbook</a></code>, <code><a href="cellstyle-class.html">cellstyle</a></code>, <code><a href="createCellStyle-methods.html">createCellStyle</a></code>,
+<code><a href="writeNamedRegion-methods.html">writeNamedRegion</a></code>, <code><a href="writeWorksheet-methods.html">writeWorksheet</a></code>, <code><a href="setStyleNamePrefix-methods.html">setStyleNamePrefix</a></code>,
+<code><a href="setCellStyleForType-methods.html">setCellStyleForType</a></code>,
+<code><a href="setDataFormatForType-methods.html">setDataFormatForType</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+# Load workbook (create if not existing)
+wb &lt;- loadWorkbook("styleaction.xlsx", create = TRUE)
+
+# Set style action to 'name prefix' 
+setStyleAction(wb, XLC$"STYLE_ACTION.NAME_PREFIX")
+# Set the name prefix to 'MyPersonalStyle'
+setStyleNamePrefix(wb, "MyPersonalStyle")
+
+# We now create a named cell style to be used for the header 
+# (column names) of a data.frame
+headerCellStyle &lt;- createCellStyle(wb, 
+                             name = "MyPersonalStyle.Header")
+
+# Specify the cell style to use a solid foreground color
+setFillPattern(headerCellStyle, 
+               fill = XLC$"FILL.SOLID_FOREGROUND")
+
+# Specify the foreground color to be used
+setFillForegroundColor(headerCellStyle, 
+                    color = XLC$"COLOR.LIGHT_CORNFLOWER_BLUE")
+
+# Specify a thick black bottom border
+setBorder(headerCellStyle, side = "bottom", 
+          type = XLC$"BORDER.THICK", 
+          color = XLC$"COLOR.BLACK")
+
+# We now create a named cell style to be used for 
+# the column named 'wt' (as you will see below, we will 
+# write the built-in data.frame 'mtcars')
+wtColumnCellStyle &lt;- createCellStyle(wb, 
+                           name = "MyPersonalStyle.Column.wt")
+
+# Specify the cell style to use a solid foreground color
+setFillPattern(wtColumnCellStyle, 
+               fill = XLC$"FILL.SOLID_FOREGROUND")
+
+# Specify the foreground color to be used
+setFillForegroundColor(wtColumnCellStyle, 
+                       color = XLC$"COLOR.LIGHT_ORANGE")
+
+# We now create a named cell style to be used for 
+# the 3rd column in the data.frame
+wtColumnCellStyle &lt;- createCellStyle(wb, 
+                            name = "MyPersonalStyle.Column.3")
+
+# Specify the cell style to use a solid foreground color
+setFillPattern(wtColumnCellStyle, 
+               fill = XLC$"FILL.SOLID_FOREGROUND")
+
+# Specify the foreground color to be used
+setFillForegroundColor(wtColumnCellStyle, 
+                       color = XLC$"COLOR.LIME")
+
+# Create a sheet named 'mtcars'
+createSheet(wb, name = "mtcars")
+
+# Create a named region called 'mtcars' referring to 
+# the sheet called 'mtcars'
+createName(wb, name = "mtcars", formula = "mtcars!$A$1")
+
+# Write built-in data set 'mtcars' to the above defined named region.
+# The style action 'name prefix' will be used when writing the data
+# as defined above.
+writeNamedRegion(wb, mtcars, name = "mtcars")
+
+# Save workbook (this actually writes the file to disk)
+saveWorkbook(wb)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>XLConnect</em> version 0.2-13 <a href="00Index.html">Index</a>]</div>
+</body></html>

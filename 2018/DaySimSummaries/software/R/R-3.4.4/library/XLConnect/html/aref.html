@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Constructing Excel area references</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for aref {XLConnect}"><tr><td>aref {XLConnect}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>
+Constructing Excel area references
+</h2>
+
+<h3>Description</h3>
+
+<p>Constructs an Excel area reference
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+aref(topLeft, dimension)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>topLeft</code></td>
+<td>
+<p>Top left corner. Either a <code>character</code> specifying a cell reference in the
+form &quot;A1&quot; or a <code>numeric</code> vector of length two specifying the corresponding coordinates.</p>
+</td></tr>
+<tr valign="top"><td><code>dimension</code></td>
+<td>
+<p>Dimensions (<code>numeric</code>) of a 2-dimensional object 
+(mostly a <code>data.frame</code> or a <code>matrix</code>)</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>Returns the area reference (<code>character</code>) for the specified top left cell and dimension.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Martin Studer<br />
+Mirai Solutions GmbH <a href="http://www.mirai-solutions.com">http://www.mirai-solutions.com</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="aref2idx.html">aref2idx</a></code>, <code><a href="idx2aref.html">idx2aref</a></code>,
+<code><a href="idx2cref.html">idx2cref</a></code>, <code><a href="col2idx.html">col2idx</a></code>, <code><a href="idx2col.html">idx2col</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+aref("A1", dim(mtcars))
+aref(c(1, 1), dim(mtcars))
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>XLConnect</em> version 0.2-13 <a href="00Index.html">Index</a>]</div>
+</body></html>

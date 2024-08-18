@@ -1,0 +1,121 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Excel Connector for R</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for XLConnect-package {XLConnect}"><tr><td>XLConnect-package {XLConnect}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>
+Excel Connector for R
+</h2>
+
+<h3>Description</h3>
+
+<p>Provides comprehensive functionality to read, write and format Excel data.
+</p>
+
+
+<h3>Details</h3>
+
+
+<table summary="Rd table">
+<tr>
+ <td style="text-align: left;">
+Package: </td><td style="text-align: left;"> XLConnect</td>
+</tr>
+<tr>
+ <td style="text-align: left;">
+Type: </td><td style="text-align: left;"> Package</td>
+</tr>
+<tr>
+ <td style="text-align: left;">
+Version: </td><td style="text-align: left;"> 0.2-13</td>
+</tr>
+<tr>
+ <td style="text-align: left;">
+Date: </td><td style="text-align: left;"> 2017-05-10</td>
+</tr>
+<tr>
+ <td style="text-align: left;">
+URL: </td><td style="text-align: left;"> <a href="http://www.mirai-solutions.com">http://www.mirai-solutions.com</a></td>
+</tr>
+<tr>
+ <td style="text-align: left;">
+</td><td style="text-align: left;"> <a href="http://miraisolutions.wordpress.com">http://miraisolutions.wordpress.com</a></td>
+</tr>
+<tr>
+ <td style="text-align: left;">
+SystemRequirements: </td><td style="text-align: left;"> java (&gt;= 1.6)</td>
+</tr>
+<tr>
+ <td style="text-align: left;">
+Depends: </td><td style="text-align: left;"> R (&gt;= 2.10.0), XLConnectJars (== 0.2-12)</td>
+</tr>
+<tr>
+ <td style="text-align: left;">
+Imports: </td><td style="text-align: left;"> methods, rJava, utils</td>
+</tr>
+<tr>
+ <td style="text-align: left;">
+Suggests: </td><td style="text-align: left;"> RUnit, lattice, ggplot2 (&gt;= 0.9.3), zoo</td>
+</tr>
+<tr>
+ <td style="text-align: left;">
+License: </td><td style="text-align: left;"> GPL-3</td>
+</tr>
+<tr>
+ <td style="text-align: left;">
+Copyright: </td><td style="text-align: left;"> See file COPYRIGHTS</td>
+</tr>
+<tr>
+ <td style="text-align: left;">
+LazyData: </td><td style="text-align: left;"> yes</td>
+</tr>
+<tr>
+ <td style="text-align: left;">
+</td>
+</tr>
+
+</table>
+
+<p>For an overview over the package please refer to the available demos:<br />
+<code>demo(package = "XLConnect")</code>
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Mirai Solutions GmbH, <a href="mailto:xlconnect@mirai-solutions.com">xlconnect@mirai-solutions.com</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>Mirai Solutions GmbH: <a href="http://www.mirai-solutions.com">http://www.mirai-solutions.com</a><br />
+Mirai Solutions on GitHub: <a href="https://github.com/miraisolutions">https://github.com/miraisolutions</a><br />
+Mirai Solutions Blog: <a href="http://miraisolutions.wordpress.com">http://miraisolutions.wordpress.com</a><br />
+Apache POI: <a href="http://poi.apache.org">http://poi.apache.org</a>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+# Load workbook; create if not existing
+wb &lt;- loadWorkbook("XLConnect.xlsx", create = TRUE)
+
+# Create a worksheet
+createSheet(wb, name = "mtcars")
+
+# Create a name reference
+createName(wb, name = "mtcars", formula = "mtcars!$C$5")
+
+# Write built-in data.frame 'mtcars' to the specified named region
+writeNamedRegion(wb, mtcars, name = "mtcars")
+
+# Save workbook
+saveWorkbook(wb)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>XLConnect</em> version 0.2-13 <a href="00Index.html">Index</a>]</div>
+</body></html>

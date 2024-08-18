@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Setting auto-filters on worksheets</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for setAutoFilter-methods {XLConnect}"><tr><td>setAutoFilter-methods {XLConnect}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Setting auto-filters on worksheets</h2>
+
+<h3>Description</h3>
+
+<p>Sets an auto-filter on a specified worksheet. 
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+## S4 method for signature 'workbook,character'
+setAutoFilter(object,sheet,reference)
+## S4 method for signature 'workbook,numeric'
+setAutoFilter(object,sheet,reference)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>object</code></td>
+<td>
+<p>The <code><a href="workbook-class.html">workbook</a></code> to use</p>
+</td></tr>
+<tr valign="top"><td><code>sheet</code></td>
+<td>
+<p>The name or index of the sheet on which to set the auto-filter</p>
+</td></tr>
+<tr valign="top"><td><code>reference</code></td>
+<td>
+<p>A cell range specification (<code>character</code>) in the form 'A1:B8'</p>
+</td></tr>
+</table>
+
+
+<h3>Author(s)</h3>
+
+<p>Martin Studer<br />
+Mirai Solutions GmbH <a href="http://www.mirai-solutions.com">http://www.mirai-solutions.com</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="workbook-class.html">workbook</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+# Load workbook (create if not existing)
+wb &lt;- loadWorkbook("autofilter.xlsx", create = TRUE)
+
+# Create a worksheet named 'mtcars'
+createSheet(wb, name = "mtcars")
+
+# Create a named region called 'mtcars' on the sheet called 'mtcars'
+createName(wb, name = "mtcars", formula = "mtcars!$A$1")
+
+# Write built-in data set 'mtcars' to the above defined named region
+# (using header = TRUE)
+writeNamedRegion(wb, mtcars, name = "mtcars")
+
+# Set an auto-filter for the named region written above
+setAutoFilter(wb, sheet = "mtcars", reference = aref("A1", dim(mtcars)))
+
+# Save workbook (this actually writes the file to disk)
+saveWorkbook(wb)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>XLConnect</em> version 0.2-13 <a href="00Index.html">Index</a>]</div>
+</body></html>

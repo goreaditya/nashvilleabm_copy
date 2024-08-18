@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Converting indices to Excel cell references</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for idx2cref {XLConnect}"><tr><td>idx2cref {XLConnect}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>
+Converting indices to Excel cell references
+</h2>
+
+<h3>Description</h3>
+
+<p>Converts row &amp; column indices to Excel cell references
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+idx2cref(x, absRow = TRUE, absCol = TRUE)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+<p>Numeric (integer) matrix or vector of indices. If a matrix is provided it
+should have two columns with the first column representing the row indices and the second
+column representing the column indices (i.e. each row represents a index-based cell reference). 
+If a vector is provided it will be converted to a matrix by filling the vector into a 2-column 
+matrix by row.
+</p>
+</td></tr>
+<tr valign="top"><td><code>absRow</code></td>
+<td>
+<p>Boolean determining if the row index should be considered absolute. 
+If <code>TRUE</code> (default), this will result in a '$'-prefixed row identifier.
+</p>
+</td></tr>
+<tr valign="top"><td><code>absCol</code></td>
+<td>
+<p>Boolean determining if the column index should be considered absolute.
+If <code>TRUE</code> (default), this will result in a '$'-prefixed column identifier.
+</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>Returns a character vector of corresponding Excel cell references.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Martin Studer<br />
+Mirai Solutions GmbH <a href="http://www.mirai-solutions.com">http://www.mirai-solutions.com</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="cref2idx.html">cref2idx</a></code>, <code><a href="idx2col.html">idx2col</a></code>, <code><a href="col2idx.html">col2idx</a></code>,
+<code><a href="idx2aref.html">idx2aref</a></code>, <code><a href="aref2idx.html">aref2idx</a></code>, <code><a href="aref.html">aref</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+idx2cref(c(5, 8, 14, 38))
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>XLConnect</em> version 0.2-13 <a href="00Index.html">Index</a>]</div>
+</body></html>

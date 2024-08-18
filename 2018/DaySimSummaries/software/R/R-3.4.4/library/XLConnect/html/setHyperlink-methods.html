@@ -1,0 +1,106 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Setting hyperlinks</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for setHyperlink-methods {XLConnect}"><tr><td>setHyperlink-methods {XLConnect}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Setting hyperlinks</h2>
+
+<h3>Description</h3>
+
+<p>Sets hyperlinks for specific cells in a <code><a href="workbook-class.html">workbook</a></code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+## S4 method for signature 'workbook,missing,character'
+setHyperlink(object,formula,sheet,row,col,type,address)
+## S4 method for signature 'workbook,missing,numeric'
+setHyperlink(object,formula,sheet,row,col,type,address)
+## S4 method for signature 'workbook,character,missing'
+setHyperlink(object,formula,sheet,row,col,type,address)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>object</code></td>
+<td>
+<p>The <code><a href="workbook-class.html">workbook</a></code> to use</p>
+</td></tr>
+<tr valign="top"><td><code>formula</code></td>
+<td>
+<p>A formula specification in the form Sheet!B8:C17. Use either the argument <code>formula</code> or the combination of <code>sheet</code>, <code>row</code> and <code>col</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>sheet</code></td>
+<td>
+<p>Name or index of the sheet the cell is on. Use either the argument <code>formula</code> or the combination of <code>sheet</code>, <code>row</code> and <code>col</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>row</code></td>
+<td>
+<p>Row index of the cell to apply the cellstyle to.</p>
+</td></tr>
+<tr valign="top"><td><code>col</code></td>
+<td>
+<p>Column index of the cell to apply the cellstyle to.</p>
+</td></tr>
+<tr valign="top"><td><code>type</code></td>
+<td>
+<p>Hyperlink type. See the corresponding &quot;HYPERLINK.*&quot; constants from the <code><a href="XLC.html">XLC</a></code> object.</p>
+</td></tr>
+<tr valign="top"><td><code>address</code></td>
+<td>
+<p>Hyperlink address. This needs to be a valid URI including scheme. E.g. for email <code>mailto:myself@me.org</code>, for a URL <code>http://www.somewhere.net</code> or for a file <code>file:///a/b/c.dat</code></p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>Sets a hyperlink for the specified cells. Note that <code><a href="cellstyle-class.html">cellstyle</a></code>s for hyperlinks can be defined independently using
+<code><a href="setCellStyle-methods.html">setCellStyle</a></code>. The arguments are vectorized such that multiple hyperlinks can be set in one
+method call. Use either the argument <code>formula</code> or the combination of <code>sheet</code>, <code>row</code> and <code>col</code>.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Martin Studer<br />
+Mirai Solutions GmbH <a href="http://www.mirai-solutions.com">http://www.mirai-solutions.com</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="workbook-class.html">workbook</a></code>, <code><a href="setCellStyle-methods.html">setCellStyle</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+# Load workbook (create if not existing)
+wb &lt;- loadWorkbook("setHyperlink.xlsx", create = TRUE)
+
+# Create a sheet named 'mtcars'
+createSheet(wb, name = "mtcars")
+
+
+# Write built-in data set 'mtcars' to the above defined worksheet
+writeWorksheet(wb, mtcars, sheet = "mtcars", rownames = "Car")
+
+# Set hyperlinks
+links &lt;- paste0("http://www.google.com?q=", gsub(" ", "+", rownames(mtcars)))
+setHyperlink(wb, sheet = "mtcars", row = seq_len(nrow(mtcars)) + 1, col = 1,
+  type = XLC$HYPERLINK.URL, address = links)
+
+# Save workbook (this actually writes the file to disk)
+saveWorkbook(wb)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>XLConnect</em> version 0.2-13 <a href="00Index.html">Index</a>]</div>
+</body></html>

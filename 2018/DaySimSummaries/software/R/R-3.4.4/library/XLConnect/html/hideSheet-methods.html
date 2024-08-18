@@ -1,0 +1,107 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Hiding worksheets in a workbook</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for hideSheet-methods {XLConnect}"><tr><td>hideSheet-methods {XLConnect}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Hiding worksheets in a workbook</h2>
+
+<h3>Description</h3>
+
+<p>(Very) hides the specified worksheets in a <code><a href="workbook-class.html">workbook</a></code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+## S4 method for signature 'workbook,character'
+hideSheet(object, sheet, veryHidden)
+## S4 method for signature 'workbook,numeric'
+hideSheet(object, sheet, veryHidden)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>object</code></td>
+<td>
+<p>The <code><a href="workbook-class.html">workbook</a></code> to use</p>
+</td></tr>
+<tr valign="top"><td><code>sheet</code></td>
+<td>
+<p>The name or index of the sheet to hide</p>
+</td></tr>
+<tr valign="top"><td><code>veryHidden</code></td>
+<td>
+<p>If <code>veryHidden = TRUE</code>, the specified <code>sheet</code> is &quot;very&quot; hidden
+(see note), otherwise it is just hidden. Default is <code>FALSE</code>.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>The arguments <code>sheet</code> and <code>veryHidden</code> are vectorized such
+that multiple worksheets can be (very) hidden with one method call. An
+exception is thrown if the specified <code>sheet</code> does not exist.
+</p>
+
+
+<h3>Note</h3>
+
+<p>Note that hidden worksheets can be unhidden by users directly within
+Excel via standard functionality. Therefore Excel  knows the concept
+of &quot;very hidden&quot; worksheets. These worksheets cannot be unhidden with
+standard Excel functionality but need programatic intervention to be
+made visible.<br /><br />
+</p>
+<p>Also note that in case the specified worksheet to hide is the
+currently active worksheet, then <code>hideSheet</code> tries to set the
+active worksheet to the first non-hidden (not hidden and not very
+hidden) worksheet in the workbook. If there is no such worksheet,
+<code>hideSheet</code> will throw an exception. 
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Martin Studer<br />
+Mirai Solutions GmbH <a href="http://www.mirai-solutions.com">http://www.mirai-solutions.com</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="workbook-class.html">workbook</a></code>, <code><a href="unhideSheet-methods.html">unhideSheet</a></code>,
+<code><a href="isSheetHidden-methods.html">isSheetHidden</a></code>, <code><a href="isSheetVeryHidden-methods.html">isSheetVeryHidden</a></code>,
+<code><a href="isSheetVisible-methods.html">isSheetVisible</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+# Load workbook (create if not existing)
+wb &lt;- loadWorkbook("hiddenWorksheet.xlsx", create = TRUE)
+
+# Write a couple of built-in data.frame's into sheets
+# with corresponding name
+for(obj in c("CO2", "airquality", "swiss")) {
+  createSheet(wb, name = obj)
+  writeWorksheet(wb, get(obj), sheet = obj)
+}
+
+# Hide sheet 'airquality';
+# the sheet may be unhidden by a user from within Excel
+# since veryHidden defaults to FALSE
+hideSheet(wb, sheet = "airquality")
+
+# Save workbook
+saveWorkbook(wb)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>XLConnect</em> version 0.2-13 <a href="00Index.html">Index</a>]</div>
+</body></html>

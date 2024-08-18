@@ -1,0 +1,125 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Creating custom named and anonymous cell styles</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for createCellStyle-methods {XLConnect}"><tr><td>createCellStyle-methods {XLConnect}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Creating custom named and anonymous cell styles</h2>
+
+<h3>Description</h3>
+
+<p>Creates a custom named or anonymous <code><a href="cellstyle-class.html">cellstyle</a></code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+## S4 method for signature 'workbook,character'
+createCellStyle(object,name)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>object</code></td>
+<td>
+<p>The <code><a href="workbook-class.html">workbook</a></code> to use</p>
+</td></tr>
+<tr valign="top"><td><code>name</code></td>
+<td>
+<p>The name of the new <code><a href="cellstyle-class.html">cellstyle</a></code> to create. Omit
+to create an anonymous <code><a href="cellstyle-class.html">cellstyle</a></code>.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>Creates a named <code><a href="cellstyle-class.html">cellstyle</a></code> with the specified <code>name</code>. Named cell
+styles may be used in conjunction with the <em>name prefix</em> style
+action (see <code><a href="setStyleAction-methods.html">setStyleAction</a></code>) or
+may also be used directly with the method
+<code><a href="setCellStyle-methods.html">setCellStyle</a></code>. Named cell styles can
+easily be changed from within Excel using the cell styles menu.
+</p>
+<p>If <code>name</code> is missing, an anonymous cell style is created.
+Anonymous cell styles can be used in conjunction with the
+<code><a href="setCellStyle-methods.html">setCellStyle</a></code> method.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Martin Studer<br />
+Mirai Solutions GmbH <a href="http://www.mirai-solutions.com">http://www.mirai-solutions.com</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="workbook-class.html">workbook</a></code>, <code><a href="cellstyle-class.html">cellstyle</a></code>, <code><a href="setStyleAction-methods.html">setStyleAction</a></code>, 
+<code><a href="setStyleNamePrefix-methods.html">setStyleNamePrefix</a></code>, <code><a href="setCellStyle-methods.html">setCellStyle</a></code>,
+<code><a href="setDataFormat-methods.html">setDataFormat</a></code>, <code><a href="setBorder-methods.html">setBorder</a></code>,
+<code><a href="setFillBackgroundColor-methods.html">setFillBackgroundColor</a></code>, <code><a href="setFillForegroundColor-methods.html">setFillForegroundColor</a></code>,
+<code><a href="setFillPattern-methods.html">setFillPattern</a></code>, <code><a href="setWrapText-methods.html">setWrapText</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+# Load workbook (create if not existing)
+wb &lt;- loadWorkbook("createCellstyles.xlsx", create = TRUE)
+
+# We don't set a specific style action in this demo, so the 
+# default 'XLConnect' will be used (XLC$"STYLE_ACTION.XLCONNECT")
+
+# Create a sheet named 'mtcars'
+createSheet(wb, name = "mtcars")
+
+# Create a named region called 'mtcars' referring to the sheet
+# called 'mtcars'
+createName(wb, name = "mtcars", formula = "mtcars!$C$4")
+
+# Write built-in data set 'mtcars' to the above defined named region.
+# This will use the default style action 'XLConnect'.
+writeNamedRegion(wb, mtcars, name = "mtcars")
+
+# Now let's color all weight cells of cars with a weight &gt; 3.5 in red
+# (mtcars$wt &gt; 3.5)
+
+# First, create a corresponding (named) cell style
+heavyCar &lt;- createCellStyle(wb, name = "HeavyCar")
+
+# Specify the cell style to use a solid foreground color
+setFillPattern(heavyCar, fill = XLC$"FILL.SOLID_FOREGROUND")
+
+# Specify the foreground color to be used
+setFillForegroundColor(heavyCar, color = XLC$"COLOR.RED")
+
+# Which cars have a weight &gt; 3.5 ?
+rowIndex &lt;- which(mtcars$wt &gt; 3.5)
+
+# NOTE: The mtcars data.frame has been written offset with 
+# top left cell C4 - and we have also written a header row!
+# So, let's take that into account appropriately. Obviously, 
+# the two steps could be combined directly into one ...
+rowIndex &lt;- rowIndex + 4
+
+# The same holds for the column index
+colIndex &lt;- which(names(mtcars) == "wt") + 2
+
+# Set the 'HeavyCar' cell style for the corresponding cells.
+# Note: the row and col arguments are vectorized!
+setCellStyle(wb, sheet = "mtcars", row = rowIndex, col = colIndex, 
+             cellstyle = heavyCar)
+
+# Save workbook (this actually writes the file to disk)
+saveWorkbook(wb)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>XLConnect</em> version 0.2-13 <a href="00Index.html">Index</a>]</div>
+</body></html>

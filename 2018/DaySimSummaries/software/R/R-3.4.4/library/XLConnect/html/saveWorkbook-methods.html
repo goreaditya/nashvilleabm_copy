@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Saving Microsoft Excel workbooks</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for saveWorkbook-methods {XLConnect}"><tr><td>saveWorkbook-methods {XLConnect}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Saving Microsoft Excel workbooks</h2>
+
+<h3>Description</h3>
+
+<p>Saves a <code><a href="workbook-class.html">workbook</a></code> to the corresponding Excel file. This method actually writes the <code><a href="workbook-class.html">workbook</a></code> object to disk.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+## S4 method for signature 'workbook,missing'
+saveWorkbook(object,file)
+## S4 method for signature 'workbook,character'
+saveWorkbook(object,file)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>object</code></td>
+<td>
+<p>The <code><a href="workbook-class.html">workbook</a></code> to save</p>
+</td></tr>
+<tr valign="top"><td><code>file</code></td>
+<td>
+<p>The file to which to save the <code><a href="workbook-class.html">workbook</a></code> (&quot;save as&quot;).
+If not specified (missing), the workbook will be saved to the <code><a href="workbook-class.html">workbook</a></code>'s underlying 
+file which is the file specified in <code><a href="loadWorkbook.html">loadWorkbook</a></code> (also see the <code><a href="workbook-class.html">workbook</a></code> 
+class for more information). Note that due to currently missing functionality in Apache POI, workbooks can
+only be saved in the same file format - i.e. if the workbooks underlying file format is xls, then the 
+<code>file</code> argument may only specify another xls file. Also note that when specifying the <code>file</code> 
+argument the <code><a href="workbook-class.html">workbook</a></code>'s underlying filename changes to reflect the &quot;save as&quot; behavior.<br />
+Paths are expanded using <code>path.expand</code>.
+</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>Saves the specified <code><a href="workbook-class.html">workbook</a></code> object to disk.
+</p>
+
+
+<h3>Note</h3>
+
+<p>As already mentioned in the documentation of the
+<code><a href="workbook-class.html">workbook</a></code> class,  a <code><a href="workbook-class.html">workbook</a></code>'s
+underlying Excel file is not saved (or being created in case the file
+did not exist and <code>create = TRUE</code> has been specified) unless the
+<code>saveWorkbook</code> method has been called on the object. This provides
+more flexibility to the user to decide when changes are saved and also
+provides better performance in that several changes can be written in
+one go (normally at the end, rather than  after every operation causing
+the file to be rewritten again completely each time). This is due to the
+fact that workbooks are manipulated in-memory and are only written to
+disk with specifically calling <code>saveWorkbook</code>.<br /><br />
+Further note that calling <code>saveWorkbook</code> more than once leads to an
+exception. This is due to a current issue in the underlying POI libraries.
+However, with <span class="pkg">XLConnect</span> there should be no need to call <code>saveWorkbook</code>
+more than once so virtually this is no issue.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Martin Studer<br />
+Mirai Solutions GmbH <a href="http://www.mirai-solutions.com">http://www.mirai-solutions.com</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="workbook-class.html">workbook</a></code>, <code><a href="loadWorkbook.html">loadWorkbook</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+# Create a new workbook 'saveMe.xlsx'
+# (assuming the file to not exist already)
+wb &lt;- loadWorkbook("saveMe.xlsx", create = TRUE)
+
+# Create a worksheet called 'mtcars'
+createSheet(wb, name = "mtcars")
+
+# Write built-in dataset 'mtcars' to sheet 'mtcars' created above
+writeWorksheet(wb, mtcars, sheet = "mtcars")
+
+# Save workbook - this actually writes the file 'saveMe.xlsx' to disk
+saveWorkbook(wb)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>XLConnect</em> version 0.2-13 <a href="00Index.html">Index</a>]</div>
+</body></html>

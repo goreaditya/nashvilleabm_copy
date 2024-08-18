@@ -1,0 +1,85 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Setting the height of a row in a worksheet</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for setRowHeight-methods {XLConnect}"><tr><td>setRowHeight-methods {XLConnect}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Setting the height of a row in a worksheet</h2>
+
+<h3>Description</h3>
+
+<p>Sets the height of a row in a worksheet.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+## S4 method for signature 'workbook,character'
+setRowHeight(object,sheet,row,height)
+## S4 method for signature 'workbook,numeric'
+setRowHeight(object,sheet,row,height)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>object</code></td>
+<td>
+<p>The <code><a href="workbook-class.html">workbook</a></code> to use</p>
+</td></tr>
+<tr valign="top"><td><code>sheet</code></td>
+<td>
+<p>The name or index of the sheet to edit</p>
+</td></tr>
+<tr valign="top"><td><code>row</code></td>
+<td>
+<p>The index of the row to resize</p>
+</td></tr>
+<tr valign="top"><td><code>height</code></td>
+<td>
+<p>The height in points. If <code>height &lt; 0</code> (default: -1),
+the row will be sized to the sheet's default row height.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>Note that the arguments <code>sheet</code>, <code>row</code> and <code>height</code> are
+vectorized. As such the row height of multiple rows (potentially on
+different worksheets) can be set with one method call. 
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Martin Studer<br />
+Mirai Solutions GmbH <a href="http://www.mirai-solutions.com">http://www.mirai-solutions.com</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="workbook-class.html">workbook</a></code>, <code><a href="setColumnWidth-methods.html">setColumnWidth</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+# mtcars xlsx file from demoFiles subfolder of package XLConnect
+mtcarsFile &lt;- system.file("demoFiles/mtcars.xlsx", package = "XLConnect")
+
+# Load workbook
+wb &lt;- loadWorkbook(mtcarsFile)
+
+# Sets the row height of the 1st row on sheet 'mtcars'
+# to 20 points
+setRowHeight(wb, sheet = "mtcars", row = 1, height = 20)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>XLConnect</em> version 0.2-13 <a href="00Index.html">Index</a>]</div>
+</body></html>

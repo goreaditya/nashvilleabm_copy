@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Querying the cell style per data type for the DATATYPE style...</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for getCellStyleForType-methods {XLConnect}"><tr><td>getCellStyleForType-methods {XLConnect}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Querying the cell style per data type for the DATATYPE style action</h2>
+
+<h3>Description</h3>
+
+<p>Queries the cell style for a specific data type as used by the DATATYPE style action.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+## S4 method for signature 'workbook'
+getCellStyleForType(object,type)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>object</code></td>
+<td>
+<p>The <code><a href="workbook-class.html">workbook</a></code> to use</p>
+</td></tr>
+<tr valign="top"><td><code>type</code></td>
+<td>
+<p>The data type for which to get the <code><a href="cellstyle-class.html">cellstyle</a></code>.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>Based on the (cell) data type the DATATYPE style action (see <code><a href="setStyleAction-methods.html">setStyleAction</a></code>)
+sets the <code><a href="cellstyle-class.html">cellstyle</a></code> for the corresponding cells. The data <code>type</code> is normally specified via a
+corresponding data type constant from the <code><a href="XLC.html">XLC</a></code> object. 
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Martin Studer<br />
+Mirai Solutions GmbH <a href="http://www.mirai-solutions.com">http://www.mirai-solutions.com</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="workbook-class.html">workbook</a></code>, <code><a href="setCellStyleForType-methods.html">setCellStyleForType</a></code>,
+<code><a href="setStyleAction-methods.html">setStyleAction</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+file.copy(system.file("demoFiles/template2.xlsx", 
+                      package = "XLConnect"),
+          "datatype.xlsx", overwrite = TRUE)
+
+# Load workbook
+wb &lt;- loadWorkbook("datatype.xlsx")
+
+# Get current (existing) cell style for numerics
+cs &lt;- getCellStyleForType(wb, XLC$"DATA_TYPE.NUMERIC")
+# Could also say cs &lt;- getCellStyleForType(wb, "numeric")
+
+# Change style
+setBorder(cs, side = c("bottom", "right"), type = XLC$"BORDER.THICK", 
+          color = c(XLC$"COLOR.BLACK", XLC$"COLOR.RED"))
+          
+# Set style action to 'datatype'
+setStyleAction(wb, XLC$"STYLE_ACTION.DATATYPE")
+
+# Write built-in data set 'mtcars' to the named region 
+# 'mtcars' as defined by the Excel template.
+writeNamedRegion(wb, mtcars, name = "mtcars")
+
+# Save workbook
+saveWorkbook(wb)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>XLConnect</em> version 0.2-13 <a href="00Index.html">Index</a>]</div>
+</body></html>

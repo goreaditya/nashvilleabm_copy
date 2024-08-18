@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Converting Excel cell references to indices</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for cref2idx {XLConnect}"><tr><td>cref2idx {XLConnect}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>
+Converting Excel cell references to indices
+</h2>
+
+<h3>Description</h3>
+
+<p>Converts Excel cell references to row &amp; column indices
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+cref2idx(x)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+<p>Character vector of Excel cell references (e.g. &quot;$A$20&quot;, &quot;B18&quot;, ...)
+</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>Returns a numeric matrix with two columns and as many rows as cell references that have
+been provided. The first column represents the row indices and the second column represents
+the column indices.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Martin Studer<br />
+Mirai Solutions GmbH <a href="http://www.mirai-solutions.com">http://www.mirai-solutions.com</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="idx2cref.html">idx2cref</a></code>, <code><a href="col2idx.html">col2idx</a></code>, <code><a href="idx2col.html">idx2col</a></code>,
+<code><a href="idx2aref.html">idx2aref</a></code>, <code><a href="aref2idx.html">aref2idx</a></code>, <code><a href="aref.html">aref</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+cref2idx(c("$A$20", "B18"))
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>XLConnect</em> version 0.2-13 <a href="00Index.html">Index</a>]</div>
+</body></html>

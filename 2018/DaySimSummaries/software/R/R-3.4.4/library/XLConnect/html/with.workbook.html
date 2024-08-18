@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Evaluate an R expression in a workbook environment</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for with.workbook {XLConnect}"><tr><td>with.workbook {XLConnect}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Evaluate an R expression in a workbook environment</h2>
+
+<h3>Description</h3>
+
+<p>Evaluate an R expression in an environment constructed from the named regions of an 
+Excel workbook.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+## S3 method for class 'workbook'
+with(data, expr, ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>data</code></td>
+<td>
+<p>A workbook object, as returned by <a href="loadWorkbook.html">loadWorkbook</a>.</p>
+</td></tr>
+<tr valign="top"><td><code>expr</code></td>
+<td>
+<p>expression to evaluate</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>Additional arguments passed to <a href="readNamedRegion-methods.html">readNamedRegion</a></p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>This method will read all named regions from the workbook when
+creating the environment. Names in the workbook will be processed through
+<a href="../../base/html/make.names.html">make.names</a> to obtain the variable names.
+</p>
+<p>Changes to the variables representing named regions will not affect the
+workbook contents and need to be saved explicitly using
+<a href="writeNamedRegion-methods.html">writeNamedRegion</a> and
+<a href="saveWorkbook-methods.html">saveWorkbook</a>. If the workbook contains names that
+do not map to R identifiers, </p>
+
+
+<h3>Author(s)</h3>
+
+<p>Martin Studer<br />
+Mirai Solutions GmbH <a href="http://www.mirai-solutions.com">http://www.mirai-solutions.com</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="getDefinedNames-methods.html">getDefinedNames</a></code>,
+<code><a href="readNamedRegion-methods.html">readNamedRegion</a></code>,
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+# multiregion xlsx file from demoFiles subfolder of package XLConnect
+demoExcelFile &lt;- system.file("demoFiles/multiregion.xlsx",
+                             package = "XLConnect")
+
+# load workbook
+wb &lt;- loadWorkbook(demoExcelFile)
+
+# named regions: Calendar, IQ, Iris
+print(getDefinedNames(wb))
+
+# named regions as variables
+with(wb, { 
+  print(Calendar)
+  summary(IQ)
+  summary(Iris)
+})
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>XLConnect</em> version 0.2-13 <a href="00Index.html">Index</a>]</div>
+</body></html>

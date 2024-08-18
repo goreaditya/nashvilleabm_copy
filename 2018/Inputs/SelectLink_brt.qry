@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+
+<critical_link_queries copyright="Tue Aug 18 18:31:53 2015 TransCAD (R) Caliper Corporation  All Rights Reserved">
+  <query>
+    <name>Query1</name>
+    <text>
+Route(99)
+    </text>
+  </query>
+</critical_link_queries>

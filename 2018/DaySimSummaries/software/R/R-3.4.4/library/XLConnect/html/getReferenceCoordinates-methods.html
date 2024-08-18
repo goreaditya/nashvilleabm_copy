@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Querying the coordinates of the range reference by an Excel...</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for getReferenceCoordinates-methods {XLConnect}"><tr><td>getReferenceCoordinates-methods {XLConnect}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Querying the coordinates of the range reference by an Excel name</h2>
+
+<h3>Description</h3>
+
+<p>(DEPRECATED) Queries the coordinates of an Excel name in a <code><a href="workbook-class.html">workbook</a></code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+## S4 method for signature 'workbook'
+getReferenceCoordinates(object,name)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>object</code></td>
+<td>
+<p>The <code><a href="workbook-class.html">workbook</a></code> to use</p>
+</td></tr>
+<tr valign="top"><td><code>name</code></td>
+<td>
+<p>The name to query. This argument is vectorized such that
+multiple names can be queried with one method call.</p>
+</td></tr>
+</table>
+
+
+<h3>Note</h3>
+
+<p>This function is deprecated. Use <code><a href="getReferenceCoordinatesForName-methods.html">getReferenceCoordinatesForName</a></code>
+instead.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Thomas Themel<br />
+Mirai Solutions GmbH <a href="http://www.mirai-solutions.com">http://www.mirai-solutions.com</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="workbook-class.html">workbook</a></code>, <code><a href="createName-methods.html">createName</a></code>, <code><a href="existsName-methods.html">existsName</a></code>,
+<code><a href="removeName-methods.html">removeName</a></code>, <code><a href="getReferenceFormula-methods.html">getReferenceFormula</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+# mtcars xlsx file from demoFiles subfolder of package XLConnect
+demoExcelFile &lt;- system.file("demoFiles/mtcars.xlsx", package = "XLConnect")
+
+# Load workbook
+wb &lt;- loadWorkbook(demoExcelFile)
+
+# Query reference coordinate for name 'mtcars'
+print(getReferenceCoordinatesForName(wb, name = "mtcars"))
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>XLConnect</em> version 0.2-13 <a href="00Index.html">Index</a>]</div>
+</body></html>

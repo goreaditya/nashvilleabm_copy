@@ -1,0 +1,6 @@
+
+0 header
+"Zone_id",I,1,11,0,11,0
+"Zone_ordinal",I,2,11,0,11,0
+"Dest_eligible",I,3,11,0,11,0
+"External",I,4,11,0,11,0

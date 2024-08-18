@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Setting colors on worksheet tabs</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for setSheetColor-methods {XLConnect}"><tr><td>setSheetColor-methods {XLConnect}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Setting colors on worksheet tabs</h2>
+
+<h3>Description</h3>
+
+<p>Sets a color on a specified worksheet tab. This only works for xlsx files. 
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+## S4 method for signature 'workbook,character'
+setSheetColor(object,sheet,color)
+## S4 method for signature 'workbook,numeric'
+setSheetColor(object,sheet,color)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>object</code></td>
+<td>
+<p>The <code><a href="workbook-class.html">workbook</a></code> to use</p>
+</td></tr>
+<tr valign="top"><td><code>sheet</code></td>
+<td>
+<p>The name or index of the sheet on which to set the tab color</p>
+</td></tr>
+<tr valign="top"><td><code>color</code></td>
+<td>
+<p>The color to use for the sheet tab. The color is normally specified
+via a corresponding color constant from the <code><a href="XLC.html">XLC</a></code> object.</p>
+</td></tr>
+</table>
+
+
+<h3>Author(s)</h3>
+
+<p>Nicola Lambiase<br />
+Mirai Solutions GmbH <a href="http://www.mirai-solutions.com">http://www.mirai-solutions.com</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="workbook-class.html">workbook</a></code>, <code><a href="XLC.html">XLC</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+# Load workbook (create if not existing)
+wb &lt;- loadWorkbook("sheetcolor.xlsx", create = TRUE)
+
+# Create a worksheet named 'Sheet1'
+createSheet(wb, name = "Sheet1")
+
+# Set the "Sheet1" tab color as red
+setSheetColor(wb, "Sheet1", XLC$COLOR.RED)
+
+# Create a worksheet named 'Sheet2'
+createSheet(wb, name = "Sheet2")
+
+# Set the tab color of the second workbook sheet as green
+setSheetColor(wb, 2, XLC$COLOR.GREEN)
+
+# Save workbook (this actually writes the file to disk)
+saveWorkbook(wb)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>XLConnect</em> version 0.2-13 <a href="00Index.html">Index</a>]</div>
+</body></html>

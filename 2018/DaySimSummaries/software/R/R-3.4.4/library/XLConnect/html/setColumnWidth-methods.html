@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Setting the width of a column in a worksheet</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for setColumnWidth-methods {XLConnect}"><tr><td>setColumnWidth-methods {XLConnect}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Setting the width of a column in a worksheet</h2>
+
+<h3>Description</h3>
+
+<p>Sets the width of a column in a worksheet.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+## S4 method for signature 'workbook,character'
+setColumnWidth(object,sheet,column,width)
+## S4 method for signature 'workbook,numeric'
+setColumnWidth(object,sheet,column,width)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>object</code></td>
+<td>
+<p>The <code><a href="workbook-class.html">workbook</a></code> to use</p>
+</td></tr>
+<tr valign="top"><td><code>sheet</code></td>
+<td>
+<p>The name or index of the sheet</p>
+</td></tr>
+<tr valign="top"><td><code>column</code></td>
+<td>
+<p>The index of the column to resize</p>
+</td></tr>
+<tr valign="top"><td><code>width</code></td>
+<td>
+<p>The width of the specified column in  units of 1/256th of a character width.
+If <code>width = -1</code> (default), the column is auto-sized. If negative otherwise, the column
+will be sized to the sheet's default column width.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>Note that the arguments <code>sheet</code>, <code>column</code> and <code>width</code> are
+vectorized. As such the column width of multiple columns (potentially on
+different sheets) can be set with one method call. 
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Martin Studer<br />
+Mirai Solutions GmbH <a href="http://www.mirai-solutions.com">http://www.mirai-solutions.com</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="workbook-class.html">workbook</a></code>, <code><a href="setRowHeight-methods.html">setRowHeight</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+# mtcars xlsx file from demoFiles subfolder of package XLConnect
+mtcarsFile &lt;- system.file("demoFiles/mtcars.xlsx", package = "XLConnect")
+
+# Load workbook
+wb &lt;- loadWorkbook(mtcarsFile)
+
+# Sets the column width of the 3rd column on sheet 'mtcars' 
+# to 4000/256th (= 15.625) character width
+setColumnWidth(wb, sheet = "mtcars", column = 3, width = 4000)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>XLConnect</em> version 0.2-13 <a href="00Index.html">Index</a>]</div>
+</body></html>

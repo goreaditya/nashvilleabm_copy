@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Retrieving formula definitions from cells</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for getCellFormula-methods {XLConnect}"><tr><td>getCellFormula-methods {XLConnect}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Retrieving formula definitions from cells</h2>
+
+<h3>Description</h3>
+
+<p>Retrieves a cell formula from a <code><a href="workbook-class.html">workbook</a></code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+## S4 method for signature 'workbook,character'
+getCellFormula(object,sheet,row,col)
+## S4 method for signature 'workbook,numeric'
+getCellFormula(object,sheet,row,col)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>object</code></td>
+<td>
+<p>The <code><a href="workbook-class.html">workbook</a></code> to use</p>
+</td></tr>
+<tr valign="top"><td><code>sheet</code></td>
+<td>
+<p>The name or index of the worksheet containing the cell</p>
+</td></tr>
+<tr valign="top"><td><code>row</code></td>
+<td>
+<p>The one-based row index of the cell to query</p>
+</td></tr>
+<tr valign="top"><td><code>col</code></td>
+<td>
+<p>The one-based column index of the cell to query</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>Retrieves the formula of the specified cell as a character, without the initial
+<code>=</code> character displayed in Excel. Raises an error if the specified cell 
+is not a formula cell.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Thomas Themel<br />
+Mirai Solutions GmbH <a href="http://www.mirai-solutions.com">http://www.mirai-solutions.com</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="workbook-class.html">workbook</a></code>, <code><a href="setCellFormula-methods.html">setCellFormula</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+# Load workbook (create if not existing)
+wb &lt;- loadWorkbook("cellFormula.xlsx", create = TRUE)
+
+createSheet(wb, "Formula")
+
+# Assign a formula to A1
+setCellFormula(wb, "Formula", 1, 1, "SUM($B$1:$B$29)")
+
+# Returns the formula for Sheet1!A1
+getCellFormula(wb, "Formula", 1, 1)
+# The same with a numeric sheet index
+getCellFormula(wb, 1, 1, 1)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>XLConnect</em> version 0.2-13 <a href="00Index.html">Index</a>]</div>
+</body></html>

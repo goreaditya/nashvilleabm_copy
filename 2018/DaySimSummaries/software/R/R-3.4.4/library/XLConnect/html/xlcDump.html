@@ -1,0 +1,108 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Dumping data sets to Excel files</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for xlcDump {XLConnect}"><tr><td>xlcDump {XLConnect}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>
+Dumping data sets to Excel files
+</h2>
+
+<h3>Description</h3>
+
+<p>Dumps data sets to Excel files by writing each object to a separate worksheet.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+xlcDump(list, ..., file = "dump.xlsx", pos = -1, overwrite = FALSE)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>list</code></td>
+<td>
+
+<p><code>character</code> vector of names of objects inside environment <code>pos</code> to dump into an Excel file. Objects
+will be written using <code><a href="writeWorksheet-methods.html">writeWorksheet</a></code> - as such any object will be coerced
+to a <code>data.frame</code>. If <code>missing</code>, the list of objects will be determined via the function <code>ls</code> which
+takes any arguments specified via ....
+</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+
+<p>Arguments that will be passed to the <code>ls</code> function for getting a list of object names in case the <code>list</code>
+argument is <code>missing</code>.
+</p>
+</td></tr>
+<tr valign="top"><td><code>file</code></td>
+<td>
+
+<p>Excel file to which objects will be dumped. Can be an existing or a new file. Defaults to <code>"dump.xlsx"</code>.
+</p>
+</td></tr>
+<tr valign="top"><td><code>pos</code></td>
+<td>
+
+<p>Environment in which to look for objects. Can be specified either as an <code>integer</code>
+specifying the position in the <code>search</code> list, as a <code>character</code> naming an element in the <code>search</code>
+list or as an <code>environment</code>. Defaults to <code>-1</code> which refers to the current environment.
+</p>
+</td></tr>
+<tr valign="top"><td><code>overwrite</code></td>
+<td>
+
+<p><code>logical</code> specifying if data should be overwritten if objects with the same name have already been dumped
+to the Excel <code>file</code>.
+</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>Each object is written to a separate worksheet named by the name of the object. Objects are written using the
+<code><a href="writeWorksheet-methods.html">writeWorksheet</a></code> method - as such any object will be coerced to <code>data.frame</code>. 
+</p>
+
+
+<h3>Value</h3>
+
+<p>Named <code>logical</code> vector specifying if objects have been dumped or not. An object may not be dumped because there
+was an issue with the coercion to a <code>data.frame</code> or the object already existed (and <code>overwrite = FALSE</code>) in
+the workbook.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Martin Studer<br />
+Mirai Solutions GmbH <a href="http://www.mirai-solutions.com">http://www.mirai-solutions.com</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="xlcRestore.html">xlcRestore</a></code>, <code><a href="writeNamedRegion-methods.html">writeNamedRegion</a></code>, 
+<code><a href="writeWorksheet-methods.html">writeWorksheet</a></code>, <code><a href="writeNamedRegionToFile.html">writeNamedRegionToFile</a></code>,
+<code><a href="writeWorksheetToFile.html">writeWorksheetToFile</a></code>, <code><a href="xlcEdit.html">xlcEdit</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+require(datasets)
+xlcDump(c("airquality", "CO2", "iris", "PlantGrowth", "swiss"),
+        file = "myDump.xlsx", pos = "package:datasets")
+xlcRestore(file = "myDump.xlsx", overwrite = TRUE)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>XLConnect</em> version 0.2-13 <a href="00Index.html">Index</a>]</div>
+</body></html>

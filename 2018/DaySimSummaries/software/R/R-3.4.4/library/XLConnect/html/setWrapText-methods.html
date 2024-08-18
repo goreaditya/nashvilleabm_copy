@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Specifying text wrapping behaviour</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for setWrapText-methods {XLConnect}"><tr><td>setWrapText-methods {XLConnect}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Specifying text wrapping behaviour</h2>
+
+<h3>Description</h3>
+
+<p>Specifies if text should be wrapped in a cell.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+## S4 method for signature 'cellstyle'
+setWrapText(object,wrap)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>object</code></td>
+<td>
+<p>The <code><a href="cellstyle-class.html">cellstyle</a></code> to manipulate</p>
+</td></tr>
+<tr valign="top"><td><code>wrap</code></td>
+<td>
+<p>If <code>wrap = TRUE</code>, the text is wrapped if it exceeds the width of the cell - otherwise not.</p>
+</td></tr>
+</table>
+
+
+<h3>Author(s)</h3>
+
+<p>Martin Studer<br />
+Mirai Solutions GmbH <a href="http://www.mirai-solutions.com">http://www.mirai-solutions.com</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="workbook-class.html">workbook</a></code>, <code><a href="cellstyle-class.html">cellstyle</a></code>, <code><a href="setCellStyle-methods.html">setCellStyle</a></code>, 
+<code><a href="setStyleAction-methods.html">setStyleAction</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+# Load workbook (create if not existing)
+wb &lt;- loadWorkbook("setWrapText.xlsx", create = TRUE)
+
+# Create a worksheet
+createSheet(wb, name = "cellstyles")
+
+# Create a dummy data set with some long text
+text &lt;- data.frame(
+     Text = "Some very very very very very very very long text")
+
+# Write the value to the 'cellstyles' worksheet in the 
+# top left corner (cell A1)
+writeWorksheet(wb, text, sheet = "cellstyles", startRow = 1, 
+               startCol = 1, header = FALSE)
+
+# Create a custom anonymous cell style
+cs &lt;- createCellStyle(wb)
+
+# Specify to wrap the text
+setWrapText(cs, wrap = TRUE)
+
+# Set the cell style created above for the top left cell (A1) 
+# in the 'cellstyles' worksheet
+setCellStyle(wb, sheet = "cellstyles", row = 1, col = 1, 
+             cellstyle = cs)
+
+# Save the workbook
+saveWorkbook(wb)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>XLConnect</em> version 0.2-13 <a href="00Index.html">Index</a>]</div>
+</body></html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Appending data to a named region</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for appendNamedRegion-methods {XLConnect}"><tr><td>appendNamedRegion-methods {XLConnect}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Appending data to a named region</h2>
+
+<h3>Description</h3>
+
+<p>Appends data to an existing named region.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+## S4 method for signature 'workbook,ANY'
+appendNamedRegion(object,data,name,header,rownames)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>object</code></td>
+<td>
+<p>The <code><a href="workbook-class.html">workbook</a></code> to use</p>
+</td></tr>
+<tr valign="top"><td><code>data</code></td>
+<td>
+<p>Data to write</p>
+</td></tr>
+<tr valign="top"><td><code>name</code></td>
+<td>
+<p>Name of the (existing) named region to which to append the <code>data</code></p>
+</td></tr>
+<tr valign="top"><td><code>header</code></td>
+<td>
+<p>Specifies if the column names should be written. The default is <code>FALSE</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>rownames</code></td>
+<td>
+<p>Name (<code>character</code>) of column to use for the row names of the provided
+<code>data</code> object. If specified, the row names of the data object (<code>data.frame</code>) will be
+included as an additional column with the specified name. If <code>rownames = NULL</code> (default),
+no row names will be included.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>Appends <code>data</code> to the existing named region specified by <code>name</code>. The <code>data</code> is
+appended at the bottom of the named region. See <code><a href="writeNamedRegion-methods.html">writeNamedRegion</a></code>
+for further information on writing named regions.
+</p>
+
+
+<h3>Note</h3>
+
+<p>Named regions are automatically redefined to the area occupied by the
+previous and the newly appended data. This guarantees that the complete set 
+of data can be re-read using <code><a href="readNamedRegion-methods.html">readNamedRegion</a></code>.
+Note however, that no checks are performed to see whether the appended data has the
+same shape/structure as the previous data.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Martin Studer<br />
+Mirai Solutions GmbH <a href="http://www.mirai-solutions.com">http://www.mirai-solutions.com</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="workbook-class.html">workbook</a></code>,
+<code><a href="writeNamedRegion-methods.html">writeNamedRegion</a></code>,
+<code><a href="readNamedRegion-methods.html">readNamedRegion</a></code>,
+<code><a href="writeWorksheet-methods.html">writeWorksheet</a></code>,
+<code><a href="appendWorksheet-methods.html">appendWorksheet</a></code>,
+<code><a href="readWorksheet-methods.html">readWorksheet</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+# mtcars xlsx file from demoFiles subfolder of package XLConnect
+demoExcelFile &lt;- system.file("demoFiles/mtcars.xlsx", package = "XLConnect")
+
+# Load workbook
+wb &lt;- loadWorkbook(demoExcelFile)
+
+# Append mtcars data set to named region named 'mtcars'
+appendNamedRegion(wb, mtcars, name = "mtcars")
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>XLConnect</em> version 0.2-13 <a href="00Index.html">Index</a>]</div>
+</body></html>

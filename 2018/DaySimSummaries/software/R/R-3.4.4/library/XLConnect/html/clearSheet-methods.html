@@ -1,0 +1,85 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Clearing worksheets in a workbook</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for clearSheet-methods {XLConnect}"><tr><td>clearSheet-methods {XLConnect}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Clearing worksheets in a workbook</h2>
+
+<h3>Description</h3>
+
+<p>Clears worksheets with specified names or indices in a <code><a href="workbook-class.html">workbook</a></code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+  ## S4 method for signature 'workbook,numeric'
+clearSheet(object, sheet)
+  ## S4 method for signature 'workbook,character'
+clearSheet(object, sheet)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>object</code></td>
+<td>
+<p>The <code><a href="workbook-class.html">workbook</a></code> to use</p>
+</td></tr>
+<tr valign="top"><td><code>sheet</code></td>
+<td>
+<p>The name or the index of the worksheet to clear</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>Clearing a worksheet means to clear all the cells in that worksheet. Consequently,
+the saved workbook should be smaller in size. Clearing a worksheet can be useful
+if data sets in a worksheet need to be replaced, i.e. data are first read, modified
+in R and finally written back to the worksheet. Without clearing the worksheet first, 
+(parts of) the original data may still be visible if they occupied a larger range of 
+the worksheet.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Nicola Lambiase<br />
+Mirai Solutions GmbH <a href="http://www.mirai-solutions.com">http://www.mirai-solutions.com</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="workbook-class.html">workbook</a></code>, <code><a href="clearNamedRegion-methods.html">clearNamedRegion</a></code>, 
+<code><a href="clearRange-methods.html">clearRange</a></code>, 
+<code><a href="clearRangeFromReference-methods.html">clearRangeFromReference</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+# mtcars xlsx file from demoFiles subfolder of 
+# package XLConnect
+demoExcelFile &lt;- system.file("demoFiles/mtcars.xlsx", 
+                             package = "XLConnect")
+
+# Load workbook
+wb &lt;- loadWorkbook(demoExcelFile)
+
+# Clear worksheets named 'mtcars' and 'mtcars2'
+clearSheet(wb, sheet = c("mtcars", "mtcars2"))
+
+# Clear 3rd worksheet
+clearSheet(wb, sheet = 3) 
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>XLConnect</em> version 0.2-13 <a href="00Index.html">Index</a>]</div>
+</body></html>

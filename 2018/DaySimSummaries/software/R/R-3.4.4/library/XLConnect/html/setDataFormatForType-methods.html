@@ -1,0 +1,99 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Setting the data format for the DATA_FORMAT_ONLY style action</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for setDataFormatForType-methods {XLConnect}"><tr><td>setDataFormatForType-methods {XLConnect}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Setting the data format for the DATA_FORMAT_ONLY style action</h2>
+
+<h3>Description</h3>
+
+<p>Sets the data format for a specific data type as used by the DATA_FORMAT_ONLY style action.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+## S4 method for signature 'workbook'
+setDataFormatForType(object,type,format)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>object</code></td>
+<td>
+<p>The <code><a href="workbook-class.html">workbook</a></code> to use</p>
+</td></tr>
+<tr valign="top"><td><code>type</code></td>
+<td>
+<p>The data type for which to set the <code>format</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>format</code></td>
+<td>
+<p>A data format string</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>Based on the (cell) data type the DATA_FORMAT_ONLY style action (see <code><a href="setStyleAction-methods.html">setStyleAction</a></code>)
+sets the data format for the corresponding cells. The data <code>type</code> is normally specified via a
+corresponding data type constant from the <code><a href="XLC.html">XLC</a></code> object. Data formats are specified the standard
+Excel way. Refer to the Excel help or to the link below for more information. 
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Martin Studer<br />
+Mirai Solutions GmbH <a href="http://www.mirai-solutions.com">http://www.mirai-solutions.com</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>Excel custom data formats:<br />
+<a href="http://www.ozgrid.com/Excel/CustomFormats.htm">http://www.ozgrid.com/Excel/CustomFormats.htm</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="workbook-class.html">workbook</a></code>, <code><a href="setStyleAction-methods.html">setStyleAction</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+# Copy existing Excel template to working directory
+file.copy(system.file("demoFiles/template2.xlsx", 
+                      package = "XLConnect"),
+          "dataformat.xlsx", overwrite = TRUE)
+
+# Load workbook
+wb &lt;- loadWorkbook("dataformat.xlsx")
+
+# Set the data format for numeric columns (cells)
+# (keeping the defaults for all other data types)
+setDataFormatForType(wb, type = XLC$"DATA_TYPE.NUMERIC", 
+                     format = "0.00")
+
+# Set style action to 'data format only'
+setStyleAction(wb, XLC$"STYLE_ACTION.DATA_FORMAT_ONLY")
+
+# Write built-in data set 'mtcars' to the named region 
+# 'mtcars' as defined by the Excel template.
+writeNamedRegion(wb, mtcars, name = "mtcars")
+
+# Save workbook
+saveWorkbook(wb)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>XLConnect</em> version 0.2-13 <a href="00Index.html">Index</a>]</div>
+</body></html>

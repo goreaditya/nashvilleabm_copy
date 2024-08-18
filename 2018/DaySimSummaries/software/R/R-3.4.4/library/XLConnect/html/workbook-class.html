@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Class &quot;workbook&quot;</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for workbook-class {XLConnect}"><tr><td>workbook-class {XLConnect}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Class &quot;workbook&quot;</h2>
+
+<h3>Description</h3>
+
+<p>This is <span class="pkg">XLConnect</span>'s main entity representing a Microsoft Excel workbook. S4 objects of this class
+and corresponding methods are used to manipulate the underlying Excel workbook instances.
+</p>
+
+
+<h3>Objects from the Class</h3>
+
+<p>Objects can be created by calls of the form <code><a href="loadWorkbook.html">loadWorkbook</a>(filename, create)</code>. This is
+a shortcut form of <code>new("workbook", filename, create)</code> with some additional error checking.
+</p>
+
+
+<h3>Slots</h3>
+
+
+<dl>
+<dt><code>filename</code>:</dt><dd><p>Object of class <code>character</code> which represents the filename of the
+underlying Microsoft Excel workbook.</p>
+</dd>
+<dt><code>jobj</code>:</dt><dd><p>Object of class <code>jobjRef</code> (see package <span class="pkg">rJava</span>) which represents a Java object reference that is used
+in the back-end to manipulate the underlying Excel workbook instance.</p>
+</dd>
+</dl>
+
+<p>Note: The <code>jobj</code> slot should not be accessed directly. <code>workbook</code> objects should only be manipulated
+via the corresponding methods.
+</p>
+
+
+<h3>Note</h3>
+
+<p><span class="pkg">XLConnect</span> supports both Excel 97-2003 (*.xls) and OOXML (Excel 2007+, *.xlsx) file formats.<br /><br />
+</p>
+<p>A <code>workbook</code>'s underlying Excel file is not saved (or being created in case the file did not exist and <code>create = TRUE</code> has been
+specified) unless the <code><a href="saveWorkbook-methods.html">saveWorkbook</a></code> method has been called on the object. This provides more flexibility to the user to decide
+when changes are saved and also provides better performance in that several changes can be written in one go (normally at the end, rather than 
+after every operation causing the file to be rewritten again completely each time). This is due to the fact that workbooks are manipulated in-memory and
+are only written to disk with specifically calling <code><a href="saveWorkbook-methods.html">saveWorkbook</a></code>.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Martin Studer<br />
+Mirai Solutions GmbH <a href="http://www.mirai-solutions.com">http://www.mirai-solutions.com</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>Wikipedia: Office Open XML<br />
+<a href="http://en.wikipedia.org/wiki/Office_Open_XML">http://en.wikipedia.org/wiki/Office_Open_XML</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="loadWorkbook.html">loadWorkbook</a></code>, <code><a href="saveWorkbook-methods.html">saveWorkbook</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+# Create a new workbook 'myWorkbook.xlsx' 
+# (assuming the file to not exist already)
+wb &lt;- loadWorkbook("myWorkbook.xlsx", create = TRUE)
+
+# Create a worksheet called 'mtcars'
+createSheet(wb, name = "mtcars")
+
+# Write built-in dataset 'mtcars' to sheet 'mtcars' created above
+writeWorksheet(wb, mtcars, sheet = "mtcars")
+
+# Save workbook - this actually writes the file 'myWorkbook.xlsx' to disk
+saveWorkbook(wb)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>XLConnect</em> version 0.2-13 <a href="00Index.html">Index</a>]</div>
+</body></html>

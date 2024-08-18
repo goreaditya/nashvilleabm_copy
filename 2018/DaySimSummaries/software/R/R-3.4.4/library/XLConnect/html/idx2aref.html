@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Converting row and column based area references to Excel area...</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for idx2aref {XLConnect}"><tr><td>idx2aref {XLConnect}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>
+Converting row and column based area references to Excel area references
+</h2>
+
+<h3>Description</h3>
+
+<p>Converts row &amp; column based area references to Excel area references
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+idx2aref(x)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+<p>Numeric (integer) matrix or vector of indices. If a matrix is provided it
+should have four columns with the first two columns representing the top left corner
+(row and column indices) and the third &amp; fourth column representing the bottom right
+corner. If a vector is provided it will be converted to a matrix by filling the vector into a 4-column 
+matrix by row.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>Returns a <code>character</code> vector of corresponding Excel area references.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Martin Studer<br />
+Mirai Solutions GmbH <a href="http://www.mirai-solutions.com">http://www.mirai-solutions.com</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="aref2idx.html">aref2idx</a></code>, <code><a href="aref.html">aref</a></code>, <code><a href="idx2cref.html">idx2cref</a></code>,
+<code><a href="cref2idx.html">cref2idx</a></code>, <code><a href="idx2col.html">idx2col</a></code>, <code><a href="col2idx.html">col2idx</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+idx2aref(c(1, 1, 5, 4))
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>XLConnect</em> version 0.2-13 <a href="00Index.html">Index</a>]</div>
+</body></html>

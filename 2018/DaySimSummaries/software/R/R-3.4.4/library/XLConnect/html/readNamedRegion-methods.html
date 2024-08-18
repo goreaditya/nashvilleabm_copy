@@ -1,0 +1,258 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Reading named regions from a workbook</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for readNamedRegion {XLConnect}"><tr><td>readNamedRegion {XLConnect}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Reading named regions from a workbook</h2>
+
+<h3>Description</h3>
+
+<p>Reads named regions from a <code><a href="workbook-class.html">workbook</a></code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+## S4 method for signature 'workbook'
+readNamedRegion(object, name, header, rownames, colTypes, forceConversion, 
+dateTimeFormat, check.names, useCachedValues, keep, drop, simplify, readStrategy)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>object</code></td>
+<td>
+<p>The <code><a href="workbook-class.html">workbook</a></code> to use</p>
+</td></tr>
+<tr valign="top"><td><code>name</code></td>
+<td>
+<p>The name of the named region to read</p>
+</td></tr>
+<tr valign="top"><td><code>header</code></td>
+<td>
+<p>The argument <code>header</code> specifies if the first row
+should be interpreted as column names. The default value is <code>TRUE</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>rownames</code></td>
+<td>
+<p>Index (<code>numeric</code>) or name (<code>character</code>) of column that
+should be used as row names. The corresponding column will be removed from the data
+set. Defaults to <code>NULL</code> which means that no row names are applied. Row names must be either
+<code>integer</code> or <code>character</code>. Non-numeric columns will be coerced to <code>character</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>colTypes</code></td>
+<td>
+<p>Column types to use when reading in the data. Specified as a <code>character</code>
+vector of the corresponding type names (see <code><a href="XLC.html">XLC</a></code>; <code>XLC$DATA_TYPE.&lt;?&gt;</code>). You
+may also use R class names such as <code>numeric</code>, <code>character</code>, <code>logical</code> and <code>POSIXt</code>.
+The types are applied in the given order to the columns - elements are recycled if necessary.
+Defaults to <code>character(0)</code> meaning that column types are determined automatically (see the
+Note section for more information).<br />
+By default, type conversions are only applied if the specified column type is a more generic type
+(e.g. from Numeric to String) - otherwise <code>NA</code> is returned. The <code>forceConversion</code> flag can be
+set to force conversion into less generic types where possible.</p>
+</td></tr>
+<tr valign="top"><td><code>forceConversion</code></td>
+<td>
+<p><code>logical</code> specifying if conversions to less generic types should be
+forced. Defaults to <code>FALSE</code> meaning that if a column is specified
+to be of a certain type via the <code>colTypes</code> argument and a more generic type is detected in
+the column, then <code>NA</code> will be returned (example: column is specified to be DateTime but a
+more generic String is found). Specifying <code>forceConversion = TRUE</code> will try to enforce a
+conversion - if it succeeds the corresponding (converted) value will be returned, otherwise
+<code>NA</code>. See the Note section for some additional information.</p>
+</td></tr>
+<tr valign="top"><td><code>dateTimeFormat</code></td>
+<td>
+<p>Date/time format used when doing date/time conversions. Defaults to<br />
+<code>getOption("XLConnect.dateTimeFormat")</code>. This should be a POSIX format specifier according
+to <code><a href="../../base/html/strptime.html">strptime</a></code> although not all specifications have been implemented yet - the most
+important ones however are available.</p>
+</td></tr>
+<tr valign="top"><td><code>check.names</code></td>
+<td>
+<p><code>logical</code> specifying if column names of the resulting <code>data.frame</code>
+should be checked to ensure that they are syntactically valid valid variable names and are not
+duplicated. See the <code>check.names</code> argument of <code><a href="../../base/html/data.frame.html">data.frame</a></code>. Defaults to <code>TRUE</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>useCachedValues</code></td>
+<td>
+<p><code>logical</code> specifying whether to read cached formula results from the 
+workbook instead of re-evaluating them. This is particularly helpful in cases for reading data
+produced by Excel features not supported in XLConnect like references to external workbooks. 
+Defaults to <code>FALSE</code>, which means that formulas will be evaluated by XLConnect.</p>
+</td></tr>
+<tr valign="top"><td><code>keep</code></td>
+<td>
+<p>List of column names or indices to be kept in the output data frame.
+It is possible to specify either <code>keep</code> or <code>drop</code>, but not both at the same time. 
+Defaults to <code>NULL</code>. If a vector is passed as argument, it will be wrapped into a list.
+This list gets replicated to match the length of the other arguments.
+Example: if <code>name = c("NamedRegion1", "NamedRegion2", "NamedRegion3")</code> and <code>keep = c(1,2)</code>, <code>keep</code> will be
+internally converted into <code>list(c(1,2))</code> and then replicated to match the number of named regions, i.e.
+<code>keep = list(c(1,2), c(1,2), c(1,2))</code>. The result is that the first two columns of each named region
+are kept. If <code>keep = list(1,2)</code> is specified, it will be replicated as <code>list(1,2,1)</code>, i.e. respectively
+the first, second and first column of the named regions &quot;NamedRegion1&quot;, &quot;NamedRegion2&quot;, &quot;NamedRegion3&quot;
+will be kept.</p>
+</td></tr>
+<tr valign="top"><td><code>drop</code></td>
+<td>
+<p>List of column names or indices to be dropped in the output data frame.
+It is possible to specify either <code>keep</code> or <code>drop</code>, but not both at the same time.
+Defaults to <code>NULL</code>. If a vector is passed as argument, it will be wrapped into a list.
+This list gets replicated to match the length of the other arguments.
+Example: if <code>name = c("NamedRegion1", "NamedRegion2", "NamedRegion3")</code> and <code>drop = c(1,2)</code>, <code>drop</code> will be
+internally converted into <code>list(c(1,2))</code> and then replicated to match the number of named regions, i.e.
+<code>drop = list(c(1,2), c(1,2), c(1,2))</code>. The result is that the first two columns of each named region
+are dropped. If <code>drop = list(1,2)</code> is specified, it will be replicated as <code>list(1,2,1)</code>, i.e. respectively
+the first, second and first column of the named regions &quot;NamedRegion1&quot;, &quot;NamedRegion2&quot;, &quot;NamedRegion3&quot;
+will be dropped.</p>
+</td></tr>
+<tr valign="top"><td><code>simplify</code></td>
+<td>
+<p><code>logical</code> specifying if the result should be simplified, e.g. in case the <code>data.frame</code>
+would only have one row or one column (and data types match). Simplifying here is identical to calling <code>unlist</code>
+on the otherwise resulting <code>data.frame</code> (using <code>use.names = FALSE</code>). The default is <code>FALSE</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>readStrategy</code></td>
+<td>
+<p><code>character</code> specifying the reading strategy to use. Currently supported strategies are:
+</p>
+
+<ul>
+<li> <p><code>"default"</code> (default): Can handle all supported data types incl. date/time values and can deal 
+directly with missing value identifiers (see <code><a href="setMissingValue-methods.html">setMissingValue</a></code>)
+</p>
+</li>
+<li> <p><code>"fast"</code>: Increased read performance. Date/time values are read as numeric (number of days since 1900-01-01; 
+fractional days represent hours, minutes, and seconds) and only blank cells are recognized as missing (missing value 
+identifiers as set in <code><a href="setMissingValue-methods.html">setMissingValue</a></code> are ignored)
+</p>
+</li></ul>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>The arguments <code>name</code> and <code>header</code> are vectorized. As such,
+multiple named regions can be read with one method call. If only one
+single named region is read, the return value is a <code>data.frame</code>.If
+multiple named regions are specified, the return value is a (named)
+<code>list</code> of <code>data.frame</code>'s returned in the order they have been
+specified with the argument <code>name</code>.
+</p>
+
+
+<h3>Note</h3>
+
+<p>If no specific column types (see argument <code>colTypes</code>) are specified,
+<code>readNamedRegion</code> tries to determine the resulting column types
+based on the read cell types. If different cell types are found in a
+specific column, the most general of those is used and mapped to the
+corresponding R data type. The order of data types from least to most
+general is Boolean (<code>logical</code>) &lt; DateTime (<code>POSIXct</code>) &lt;
+Numeric (<code>numeric</code>) &lt; String (<code>character</code>). E.g. if a column
+is read that contains cells of type Boolean, Numeric and String then the
+resulting column in R would be <code>character</code> since <code>character</code>
+is the most general type.<br /><br />
+Some additional information with respect to forcing data type conversion
+using <code>forceConversion = TRUE</code>:
+</p>
+
+<ul>
+<li><p> Forcing conversion from String to Boolean: <code>TRUE</code> is returned
+if and only if the target string is &quot;true&quot; (ignoring any capitalization).
+Any other string will return <code>FALSE</code>.
+</p>
+</li>
+<li><p> Forcing conversion from Numeric to DateTime: since Excel understands
+Dates/Times as Numerics with some additional formatting, a conversion from
+a Numeric to a DateTime is actually possible. Numerics in this case represent
+the number of days since 1900-01-00 (yes, day 00! - see <a href="http://www.cpearson.com/excel/datetime.htm">http://www.cpearson.com/excel/datetime.htm</a>).
+Note that in R 0 is represented as 1899-12-31 since there is no 1900-01-00.
+Fractional days represent hours, minutes, and seconds.
+</p>
+</li></ul>
+
+
+
+<h3>Author(s)</h3>
+
+<p>Martin Studer<br />
+Thomas Themel<br />
+Nicola Lambiase<br />
+Mirai Solutions GmbH <a href="http://www.mirai-solutions.com">http://www.mirai-solutions.com</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>What are named regions/ranges?<br />
+<a href="http://www.officearticles.com/excel/named_ranges_in_microsoft_excel.htm">http://www.officearticles.com/excel/named_ranges_in_microsoft_excel.htm</a><br />
+How to create named regions/ranges?<br />
+<a href="http://www.youtube.com/watch?v=iAE9a0uRtpM">http://www.youtube.com/watch?v=iAE9a0uRtpM</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="workbook-class.html">workbook</a></code>,
+<code><a href="readWorksheet-methods.html">readWorksheet</a></code>,
+<code><a href="writeNamedRegion-methods.html">writeNamedRegion</a></code>,<br />
+<code><a href="writeWorksheet-methods.html">writeWorksheet</a></code>,
+<code><a href="readNamedRegionFromFile.html">readNamedRegionFromFile</a></code>,
+<code><a href="readTable-methods.html">readTable</a></code>,
+<code><a href="onErrorCell-methods.html">onErrorCell</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+## Example 1:
+# mtcars xlsx file from demoFiles subfolder of package XLConnect
+demoExcelFile &lt;- system.file("demoFiles/mtcars.xlsx", package = "XLConnect")
+
+# Load workbook
+wb &lt;- loadWorkbook(demoExcelFile)
+
+# Read named region 'mtcars' (with default header = TRUE)
+data &lt;- readNamedRegion(wb, name = "mtcars")
+
+## Example 2;
+# conversion xlsx file from demoFiles subfolder of package XLConnect
+excelFile &lt;- system.file("demoFiles/conversion.xlsx", package = "XLConnect")
+
+# Load workbook
+wb &lt;- loadWorkbook(excelFile)
+
+# Read named region 'conversion' with pre-specified column types
+# Note: in the worksheet all data was entered as strings!
+# forceConversion = TRUE is used to force conversion from String
+# into the less generic data types Numeric, DateTime &amp; Boolean
+df &lt;- readNamedRegion(wb, name = "conversion", header = TRUE,
+                      colTypes = c(XLC$DATA_TYPE.NUMERIC,
+                                   XLC$DATA_TYPE.DATETIME,
+                                   XLC$DATA_TYPE.BOOLEAN),
+                      forceConversion = TRUE,
+                      dateTimeFormat = "%Y-%m-%d %H:%M:%S")
+                      
+## Example 3:
+# mtcars xlsx file from demoFiles subfolder of package XLConnect
+demoExcelFile &lt;- system.file("demoFiles/mtcars.xlsx", package = "XLConnect")
+
+# Load workbook
+wb &lt;- loadWorkbook(demoExcelFile)
+
+# Read the columns 1, 3 and 5 of the named region 'mtcars' (with default header = TRUE)
+data &lt;- readNamedRegion(wb, name = "mtcars", keep=c(1,3,5))
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>XLConnect</em> version 0.2-13 <a href="00Index.html">Index</a>]</div>
+</body></html>

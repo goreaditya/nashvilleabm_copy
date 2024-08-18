@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Setting missing value identifiers</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for setMissingValue-methods {XLConnect}"><tr><td>setMissingValue-methods {XLConnect}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Setting missing value identifiers</h2>
+
+<h3>Description</h3>
+
+<p>Defines the set of missing values (character or numeric) used when reading and writing data.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+## S4 method for signature 'workbook,ANY'
+setMissingValue(object,value)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>object</code></td>
+<td>
+<p>The <code><a href="workbook-class.html">workbook</a></code> to use</p>
+</td></tr>
+<tr valign="top"><td><code>value</code></td>
+<td>
+<p><code>vector</code> or <code>list</code> of missing value identifiers (either
+<code>character</code> or <code>numeric</code>) that are recognized as missing (<code>NA</code>) 
+when reading data. The first element of this vector will be used as missing value 
+identifier when writing data. If <code>value = NULL</code> (default), missing values are 
+represented by blank cells and only blank cells are recognized as missing.</p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>If there are no specific missing value identifiers defined the default behavior is
+to map missing values to blank (empty) cells. Otherwise, each string or numeric cell is 
+checked if it matches one of the defined missing value identifiers. In addition, the first 
+missing value identifier (i.e. the first element of the <code>value</code> argument) is used to represent missing values when writing data.<br />
+Note that the missing value identifiers have to be either <code>character</code> or <code>numeric</code>.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Martin Studer<br />
+Mirai Solutions GmbH <a href="http://www.mirai-solutions.com">http://www.mirai-solutions.com</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="workbook-class.html">workbook</a></code>, <code><a href="writeNamedRegion-methods.html">writeNamedRegion</a></code>,
+<code><a href="writeWorksheet-methods.html">writeWorksheet</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+# Load workbook (create if not existing)
+wb &lt;- loadWorkbook("missingValue.xlsx", create = TRUE)
+
+# Create a worksheet named 'airquality'
+createSheet(wb, name = "airquality")
+
+# Create a named region called 'airquality' on the sheet called
+# 'airquality'
+createName(wb, name = "airquality", formula = "airquality!$A$1")
+
+# Set the missing value string to 'missing'
+setMissingValue(wb, value = "missing")
+
+# Write built-in data set 'airquality' to the above defined named region
+writeNamedRegion(wb, airquality, name = "airquality")
+
+# Save workbook
+saveWorkbook(wb)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>XLConnect</em> version 0.2-13 <a href="00Index.html">Index</a>]</div>
+</body></html>

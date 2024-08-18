@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<DaySimBufferingTool>
+  <INPUTS>
+    <FILEPATHS>
+      <ParcelFile>E:\Projects\Clients\NashvilleMPO\ModelUpdate2023\Model\Development\nashabm_TCAD9_transit\ParcelInputs\BufferTool_new\2018\nashville_landuse_new.csv</ParcelFile>
+      <IntersectionFile>E:\Projects\Clients\NashvilleMPO\ModelUpdate2023\Model\Development\nashabm_TCAD9_transit\ParcelInputs\BufferTool_new\2018\intersections_nashville_new.txt</IntersectionFile>
+      <TransitStopsFile>E:\Projects\Clients\NashvilleMPO\ModelUpdate2023\Model\Development\nashabm_TCAD9_transit\ParcelInputs\BufferTool_new\2018\transit_stops_2017.csv</TransitStopsFile>
+      <OpenSpacesFile />
+      <CircuityFile />
+      <NodeDistanceType>DaySim Format</NodeDistanceType>
+      <NodeFile>E:\Projects\Clients\NashvilleMPO\ModelUpdate2023\Model\Development\nashabm_TCAD9_transit\ParcelInputs\BufferTool_new\2018\input_node.csv</NodeFile>
+      <NodeDistanceFile>E:\Projects\Clients\NashvilleMPO\ModelUpdate2023\Model\Development\nashabm_TCAD9_transit\ParcelInputs\BufferTool_new\2018\node_node_distances.dat</NodeDistanceFile>
+      <ParcelNodeFile>E:\Projects\Clients\NashvilleMPO\ModelUpdate2023\Model\Development\nashabm_TCAD9_transit\ParcelInputs\BufferTool_new\2018\mz_node_2023.dat</ParcelNodeFile>
+      <OpenSpacesNodeFile />
+    </FILEPATHS>
+    <PARAMETERS>
+      <DistCalcType>Node-to-Node</DistCalcType>
+      <BuffType>Logistic decay</BuffType>
+      <BuffDist1>660</BuffDist1>
+      <BuffDecaySlope1>0.76</BuffDecaySlope1>
+      <BuffExpParam1>-2.5205</BuffExpParam1>
+      <BuffOffset1>2640</BuffOffset1>
+      <BuffDist2>1320</BuffDist2>
+      <BuffDecaySlope2>0.76</BuffDecaySlope2>
+      <BuffExpParam2>-0.4365</BuffExpParam2>
+      <BuffOffset2>2640</BuffOffset2>
+    </PARAMETERS>
+  </INPUTS>
+  <OUTPUTS>
+    <BufferedParcelFile>E:\Projects\Clients\NashvilleMPO\ModelUpdate2023\Model\Development\nashabm_TCAD9_transit\ParcelInputs\BufferTool_new\2018\nashville_mzbuffer_allstreets_2023.dat</BufferedParcelFile>
+    <SaveXMLFile>E:\Projects\Clients\NashvilleMPO\ModelUpdate2023\Model\Development\nashabm_TCAD9_transit\ParcelInputs\BufferTool_new\2018\nashville_buffconfig_allstreets_2023.xml</SaveXMLFile>
+  </OUTPUTS>
+</DaySimBufferingTool>

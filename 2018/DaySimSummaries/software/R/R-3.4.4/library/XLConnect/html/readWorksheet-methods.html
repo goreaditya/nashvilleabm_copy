@@ -1,0 +1,333 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Reading data from worksheets</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for readWorksheet-methods {XLConnect}"><tr><td>readWorksheet-methods {XLConnect}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Reading data from worksheets</h2>
+
+<h3>Description</h3>
+
+<p>Reads data from worksheets of a <code><a href="workbook-class.html">workbook</a></code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+## S4 method for signature 'workbook,numeric'
+readWorksheet(object,sheet,startRow,startCol,endRow,endCol,autofitRow,autofitCol,
+region,header,rownames,colTypes,forceConversion,dateTimeFormat,check.names,
+useCachedValues,keep,drop, simplify, readStrategy)
+## S4 method for signature 'workbook,character'
+readWorksheet(object,sheet,startRow,startCol,endRow,endCol,autofitRow,autofitCol,
+region,header,rownames,colTypes,forceConversion,dateTimeFormat,check.names,
+useCachedValues,keep,drop, simplify, readStrategy)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>object</code></td>
+<td>
+<p>The <code><a href="workbook-class.html">workbook</a></code> to use</p>
+</td></tr>
+<tr valign="top"><td><code>sheet</code></td>
+<td>
+<p>The name or index of the worksheet to read from</p>
+</td></tr>
+<tr valign="top"><td><code>startRow</code></td>
+<td>
+<p>The index of the first row to read from. Defaults to <code>0</code> meaning that the start row is determined automatically.</p>
+</td></tr>
+<tr valign="top"><td><code>startCol</code></td>
+<td>
+<p>The index of the first column to read from. Defaults to <code>0</code> meaning that the start column is determined automatically.</p>
+</td></tr>
+<tr valign="top"><td><code>endRow</code></td>
+<td>
+<p>The index of the last row to read from. Defaults to <code>0</code> meaning that the end row is determined automatically.</p>
+</td></tr>
+<tr valign="top"><td><code>endCol</code></td>
+<td>
+<p>The index of the last column to read from. Defaults to <code>0</code> meaning that the end column is determined automatically.</p>
+</td></tr>
+<tr valign="top"><td><code>autofitRow</code></td>
+<td>
+<p><code>logical</code> specifying if leading and trailing empty rows should be
+skipped. Defaults to <code>TRUE</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>autofitCol</code></td>
+<td>
+<p><code>logical</code> specifying if leading and trailing empty columns should be skipped. Defaults to <code>TRUE</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>region</code></td>
+<td>
+<p>A range specifier in the form 'A10:B18'. This provides an alternative way to specify
+<code>startRow</code>, <code>startCol</code>, <code>endRow</code> and <code>endCol</code>. Range specifications take precedence
+over index specifications.</p>
+</td></tr>
+<tr valign="top"><td><code>header</code></td>
+<td>
+<p>Interpret the first row of the specified area as column
+headers. The default is <code>TRUE</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>rownames</code></td>
+<td>
+<p>Index (<code>numeric</code>) or name (<code>character</code>) of column that
+should be used as row names. The corresponding column will be removed from the data
+set. Defaults to <code>NULL</code> which means that no row names are applied. Row names must be either
+<code>integer</code> or <code>character</code>. Non-numeric columns will be coerced to <code>character</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>colTypes</code></td>
+<td>
+<p>Column types to use when reading in the data. Specified as a <code>character</code>
+vector of the corresponding type names (see <code><a href="XLC.html">XLC</a></code>; <code>XLC$DATA_TYPE.&lt;?&gt;</code>). You
+may also use R class names such as <code>numeric</code>, <code>character</code>, <code>logical</code> and <code>POSIXt</code>.
+The types are applied in the given order to the columns - elements are recycled if necessary.
+Defaults to <code>character(0)</code> meaning that column types are determined automatically (see the
+Note section for more information).<br />
+By default, type conversions are only applied if the specified column type is a more generic type
+(e.g. from Numeric to String) - otherwise <code>NA</code> is returned. The <code>forceConversion</code> flag can be
+set to force conversion into less generic types where possible.</p>
+</td></tr>
+<tr valign="top"><td><code>forceConversion</code></td>
+<td>
+<p><code>logical</code> specifying if conversions to less generic types should be
+forced. Defaults to <code>FALSE</code> meaning that if a column is specified
+to be of a certain type via the <code>colTypes</code> argument and a more generic type is detected in
+the column, then <code>NA</code> will be returned (example: column is specified to be DateTime but a
+more generic String is found). Specifying <code>forceConversion = TRUE</code> will try to enforce a
+conversion - if it succeeds the corresponding (converted) value will be returned, otherwise
+<code>NA</code>. See the Note section for some additional information.</p>
+</td></tr>
+<tr valign="top"><td><code>dateTimeFormat</code></td>
+<td>
+<p>Date/time format used when doing date/time conversions. Defaults to<br />
+<code>getOption("XLConnect.dateTimeFormat")</code>. This should be a POSIX format specifier according
+to <code><a href="../../base/html/strptime.html">strptime</a></code> although not all specifications have been implemented yet - the most
+important ones however are available. When using the '%OS' specification for fractional seconds
+(without an additional integer) 3 digits will be used by default (<code>getOption("digits.secs")</code> 
+is not considered).
+</p>
+</td></tr>
+<tr valign="top"><td><code>check.names</code></td>
+<td>
+<p><code>logical</code> specifying if column names of the resulting <code>data.frame</code>
+should be checked to ensure that they are syntactically valid variable names and are not
+duplicated. See the <code>check.names</code> argument of <code><a href="../../base/html/data.frame.html">data.frame</a></code>. Defaults to <code>TRUE</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>useCachedValues</code></td>
+<td>
+<p><code>logical</code> specifying whether to read cached formula results from the 
+workbook instead of re-evaluating them. This is particularly helpful in cases for reading data
+produced by Excel features not supported in XLConnect like references to external workbooks. 
+Defaults to <code>FALSE</code>, which means that formulas will be evaluated by XLConnect.</p>
+</td></tr>
+<tr valign="top"><td><code>keep</code></td>
+<td>
+<p>Vector of column names or indices to be kept in the output data frame.
+It is possible to specify either <code>keep</code> or <code>drop</code>, but not both at the same time.
+Defaults to <code>NULL</code>. If a vector is passed as argument, it will be wrapped into a list.
+This list gets replicated to match the length of the other arguments.
+Example: if <code>sheet = c("Sheet1", "Sheet2", "Sheet3")</code> and <code>keep = c(1,2)</code>, <code>keep</code> will be
+internally converted into <code>list(c(1,2))</code> and then replicated to match the number of sheets, i.e.
+<code>keep = list(c(1,2), c(1,2), c(1,2))</code>. The result is that the first two columns of each sheet
+are kept. If <code>keep = list(1,2)</code> is specified, it will be replicated as <code>list(1,2,1)</code>, i.e. respectively
+the first, second and first column of the sheets &quot;Sheet1&quot;, &quot;Sheet2&quot;, &quot;Sheet3&quot;
+will be kept.</p>
+</td></tr>
+<tr valign="top"><td><code>drop</code></td>
+<td>
+<p>Vector of column names or indices to be dropped in the output data frame.
+It is possible to specify either <code>keep</code> or <code>drop</code>, but not both at the same time.
+Defaults to <code>NULL</code>. If a vector is passed as argument, it will be wrapped into a list.
+This list gets replicated to match the length of the other arguments.
+Example: if <code>sheet = c("Sheet1", "Sheet2", "Sheet3")</code> and <code>drop = c(1,2)</code>, <code>drop</code> will be
+internally converted into <code>list(c(1,2))</code> and then replicated to match the number of sheets, i.e.
+<code>drop = list(c(1,2), c(1,2), c(1,2))</code>. The result is that the first two columns of each sheet
+are dropped. If <code>drop = list(1,2)</code> is specified, it will be replicated as <code>list(1,2,1)</code>, i.e. respectively
+the first, second and first column of the sheets &quot;Sheet1&quot;, &quot;Sheet2&quot;, &quot;Sheet3&quot;
+will be dropped.</p>
+</td></tr>
+<tr valign="top"><td><code>simplify</code></td>
+<td>
+<p><code>logical</code> specifying if the result should be simplified, e.g. in case the <code>data.frame</code>
+would only have one row or one column (and data types match). Simplifying here is identical to calling <code>unlist</code>
+on the otherwise resulting <code>data.frame</code> (using <code>use.names = FALSE</code>). The default is <code>FALSE</code>.</p>
+</td></tr>
+<tr valign="top"><td><code>readStrategy</code></td>
+<td>
+<p><code>character</code> specifying the reading strategy to use. Currently supported strategies are:
+</p>
+
+<ul>
+<li> <p><code>"default"</code> (default): Can handle all supported data types incl. date/time values and can deal 
+directly with missing value identifiers (see <code><a href="setMissingValue-methods.html">setMissingValue</a></code>)
+</p>
+</li>
+<li> <p><code>"fast"</code>: Increased read performance. Date/time values are read as numeric (number of days since 1900-01-01; 
+fractional days represent hours, minutes, and seconds) and only blank cells are recognized as missing (missing value 
+identifiers as set in <code><a href="setMissingValue-methods.html">setMissingValue</a></code> are ignored)
+</p>
+</li></ul>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>Reads data from the worksheet specified by <code>sheet</code>. Data is read
+starting at the top left corner specified by <code>startRow</code> and
+<code>startCol</code> down to the bottom right corner specified by
+<code>endRow</code> and <code>endCol</code>. If <code>header = TRUE</code>, the first row
+is interpreted as column names of the resulting <code>data.frame</code>.<br /> If
+<code>startRow &lt;= 0</code> then the first available row in the sheet is assumed. 
+If <code>endRow = 0</code> then the last available row in the sheet is assumed.
+For <code>endRow = -n</code> with n &gt; 0, the 'last row' - n rows is assumed. This
+is useful in cases where you want to skip the last n rows.
+If <code>startCol &lt;= 0</code> then the minimum column between <code>startRow</code> and
+<code>endRow</code> is assumed. If <code>endCol = 0</code> then the maximum column between
+<code>startRow</code> and <code>endRow</code> is assumed. If <code>endCol = -n</code> with n &gt; 0,
+the maximum column between <code>startRow</code> and <code>endRow</code> except for the last n
+columns is assumed.
+</p>
+<p>In other words, if no boundaries are specified <code>readWorksheet</code> assumes the &quot;bounding box&quot; of the data as the corresponding boundaries.<br />
+The arguments <code>autofitRow</code> and <code>autofitCol</code> (both defaulting to <code>TRUE</code>) can be used to skip leading and trailing empty rows even in case <code>startRow</code>, <code>endRow</code>, <code>startCol</code> and <code>endCol</code> are specified to values <code>&gt; 0</code>. This can be useful if data is expected within certain given boundaries but the exact location is not available.<br /><br />
+</p>
+<p>If all four coordinate arguments are missing this behaves as above with
+<code>startRow = 0</code>, <code>startCol = 0</code>, <code>endRow = 0</code> and
+<code>endCol = 0</code>. In this case  <code>readWorksheet</code> assumes the
+&quot;bounding box&quot; of the data as the corresponding boundaries.<br /><br />
+</p>
+<p>All arguments (except <code>object</code>) are vectorized. As such, multiple worksheets (and also multiple data regions
+from the same worksheet) can be read with one method call. If only one single data region is read, the return value 
+is a <code>data.frame</code>. If multiple data regions are specified, the return value is a <code>list</code> of <code>data.frame</code>'s 
+returned in the order they have been specified. If worksheets have been specified by name, the <code>list</code> will be a
+named <code>list</code> named by the corresponding worksheets.
+</p>
+
+
+<h3>Note</h3>
+
+<p>If no specific column types (see argument <code>colTypes</code>) are specified,
+<code>readWorksheet</code> tries to determine the resulting column types based on the read cell types. If different cell
+types are found in a specific column, the most general of those is used and mapped to the corresponding R data type.
+The order of data types from least to most general is Boolean (<code>logical</code>) &lt; DateTime (<code>POSIXct</code>) &lt; 
+Numeric (<code>numeric</code>) &lt; String (<code>character</code>). E.g. if a column is read that contains cells of type Boolean,
+Numeric and String then the resulting column in R would be <code>character</code> since <code>character</code> is the most general
+type.<br /><br />
+Some additional information with respect to forcing data type conversion
+using <code>forceConversion = TRUE</code>:
+</p>
+
+<ul>
+<li><p> Forcing conversion from String to Boolean: <code>TRUE</code> is returned
+if and only if the target string is &quot;true&quot; (ignoring any capitalization).
+Any other string will return <code>FALSE</code>.
+</p>
+</li>
+<li><p> Forcing conversion from Numeric to DateTime: since Excel understands
+Dates/Times as Numerics with some additional formatting, a conversion from
+a Numeric to a DateTime is actually possible. Numerics in this case represent
+the number of days since 1900-01-00 (yes, day 00! - see <a href="http://www.cpearson.com/excel/datetime.htm">http://www.cpearson.com/excel/datetime.htm</a>).
+Note that in R 0 is represented as 1899-12-31 since there is no 1900-01-00.
+Fractional days represent hours, minutes, and seconds.
+</p>
+</li></ul>
+
+
+
+<h3>Author(s)</h3>
+
+<p>Martin Studer<br />
+Thomas Themel<br />
+Nicola Lambiase<br />
+Mirai Solutions GmbH <a href="http://www.mirai-solutions.com">http://www.mirai-solutions.com</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="workbook-class.html">workbook</a></code>,
+<code><a href="writeWorksheet-methods.html">writeWorksheet</a></code>,
+<code><a href="readNamedRegion-methods.html">readNamedRegion</a></code>,
+<code><a href="writeNamedRegion-methods.html">writeNamedRegion</a></code>,<br />
+<code><a href="readWorksheetFromFile.html">readWorksheetFromFile</a></code>,
+<code><a href="readTable-methods.html">readTable</a></code>,
+<code><a href="onErrorCell-methods.html">onErrorCell</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+## Example 1:
+# mtcars xlsx file from demoFiles subfolder of package XLConnect
+demoExcelFile &lt;- system.file("demoFiles/mtcars.xlsx", package = "XLConnect")
+
+# Load workbook
+wb &lt;- loadWorkbook(demoExcelFile)
+
+# Read worksheet 'mtcars' (providing no specific area bounds;
+# with default header = TRUE)
+data &lt;- readWorksheet(wb, sheet = "mtcars")
+
+
+## Example 2:
+# mtcars xlsx file from demoFiles subfolder of package XLConnect
+demoExcelFile &lt;- system.file("demoFiles/mtcars.xlsx", package = "XLConnect")
+
+# Load workbook
+wb &lt;- loadWorkbook(demoExcelFile)
+
+# Read worksheet 'mtcars' (providing area bounds; with default header = TRUE)
+data &lt;- readWorksheet(wb, sheet = "mtcars", startRow = 1, startCol = 3,
+                      endRow = 15, endCol = 8)
+
+
+## Example 3:
+# mtcars xlsx file from demoFiles subfolder of package XLConnect
+demoExcelFile &lt;- system.file("demoFiles/mtcars.xlsx", package = "XLConnect")
+
+# Load workbook
+wb &lt;- loadWorkbook(demoExcelFile)
+
+# Read worksheet 'mtcars' (providing area bounds using the region argument;
+# with default header = TRUE)
+data &lt;- readWorksheet(wb, sheet = "mtcars", region = "C1:H15")
+
+
+## Example 4:
+# conversion xlsx file from demoFiles subfolder of package XLConnect
+excelFile &lt;- system.file("demoFiles/conversion.xlsx", package = "XLConnect")
+
+# Load workbook
+wb &lt;- loadWorkbook(excelFile)
+
+# Read worksheet 'Conversion' with pre-specified column types
+# Note: in the worksheet all data was entered as strings!
+# forceConversion = TRUE is used to force conversion from String
+# into the less generic data types Numeric, DateTime &amp; Boolean
+df &lt;- readWorksheet(wb, sheet = "Conversion", header = TRUE,
+                    colTypes = c(XLC$DATA_TYPE.NUMERIC,
+                                 XLC$DATA_TYPE.DATETIME,
+                                 XLC$DATA_TYPE.BOOLEAN),
+                    forceConversion = TRUE,
+                    dateTimeFormat = "%Y-%m-%d %H:%M:%S")
+                    
+## Example 5:
+# mtcars xlsx file from demoFiles subfolder of package XLConnect
+demoExcelFile &lt;- system.file("demoFiles/mtcars.xlsx", package = "XLConnect")
+
+# Load workbook
+wb &lt;- loadWorkbook(demoExcelFile)
+
+# Read the columns 1, 3 and 5 from the sheet 'mtcars' (with default header = TRUE)
+data &lt;- readWorksheet(wb, sheet = "mtcars", keep=c(1,3,5))
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>XLConnect</em> version 0.2-13 <a href="00Index.html">Index</a>]</div>
+</body></html>

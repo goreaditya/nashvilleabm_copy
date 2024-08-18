@@ -1,0 +1,96 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Removing panes from worksheet</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for removePane-methods {XLConnect}"><tr><td>removePane-methods {XLConnect}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Removing panes from worksheet</h2>
+
+<h3>Description</h3>
+
+<p>Removes the split pane/freeze pane from the specified worksheet.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+## S4 method for signature 'workbook,character'
+removePane(object,sheet)
+## S4 method for signature 'workbook,numeric'
+removePane(object,sheet)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>object</code></td>
+<td>
+<p>The <code><a href="workbook-class.html">workbook</a></code> to use</p>
+</td></tr>
+<tr valign="top"><td><code>sheet</code></td>
+<td>
+<p>The name or index of the sheet from which to remove the split pane/freeze pane</p>
+</td></tr>
+</table>
+
+
+<h3>Note</h3>
+
+<p>To keep an area of a worksheet visible while you scroll to another area of the worksheet,
+you can lock specific rows or columns in one area by freezing or splitting panes.
+</p>
+<p>When you freeze panes, you keep specific rows or columns visible when you scroll in the worksheet.
+For example, you might want to keep row and column labels visible as you scroll.
+</p>
+<p>When you split panes, you create separate worksheet areas that you can scroll within,
+while rows or columns in the non-scrolled area remain visible.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Nicola Lambiase<br />
+Mirai Solutions GmbH <a href="http://www.mirai-solutions.com">http://www.mirai-solutions.com</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>How to create a freeze pane/split pane in Office 2007
+<a href="http://office.microsoft.com/en-us/excel-help/freeze-or-lock-rows-and-columns-HP001217048.aspx">http://office.microsoft.com/en-us/excel-help/freeze-or-lock-rows-and-columns-HP001217048.aspx</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="workbook-class.html">workbook</a></code>
+<code><a href="createFreezePane-methods.html">createFreezePane</a></code>
+<code><a href="createSplitPane-methods.html">createSplitPane</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+# Load workbook (create if not existing)
+wb &lt;- loadWorkbook("removePaneTest.xlsx", create = TRUE)
+
+# Create a worksheet named 'Sheet1'
+createSheet(wb, name = "Sheet1")
+
+# Create a split pane on Sheet1, with coordinates (10000, 5000) expressed as 1/20th of a point,
+# 10 (-&gt; J) as left column visible in right pane and 10 as top row visible in bottom pane 
+createSplitPane(wb, "Sheet1", 10000, 5000, 10, 10)
+
+# Remove the split pane from Sheet1
+removePane(wb, "Sheet1")
+
+# Save workbook (this actually writes the file to disk). Now the workbook has no split pane.
+saveWorkbook(wb)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>XLConnect</em> version 0.2-13 <a href="00Index.html">Index</a>]</div>
+</body></html>

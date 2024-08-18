@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Reading named regions from an Excel file (wrapper function)</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for readNamedRegionFromFile {XLConnect}"><tr><td>readNamedRegionFromFile {XLConnect}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Reading named regions from an Excel file (wrapper function)</h2>
+
+<h3>Description</h3>
+
+<p>Reads named regions from an Excel file.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+readNamedRegionFromFile(file, ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>file</code></td>
+<td>
+<p>The file name of the workbook to read</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>Arguments passed to <a href="readNamedRegion-methods.html">readNamedRegion</a></p>
+</td></tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>This is a convenience wrapper to read named regions from a file
+without creating an intermediate <code><a href="workbook-class.html">workbook</a></code> object.
+See <a href="readNamedRegion-methods.html">readNamedRegion</a> for more details.</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Thomas Themel<br />
+Mirai Solutions GmbH <a href="http://www.mirai-solutions.com">http://www.mirai-solutions.com</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code><a href="readNamedRegion-methods.html">readNamedRegion</a></code>,
+<code><a href="readWorksheetFromFile.html">readWorksheetFromFile</a></code>,
+<code><a href="writeNamedRegionToFile.html">writeNamedRegionToFile</a></code>,<br />
+<code><a href="writeWorksheetToFile.html">writeWorksheetToFile</a></code>,
+<code><a href="onErrorCell-methods.html">onErrorCell</a></code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+# multiregion xlsx file from demoFiles subfolder of package XLConnect
+demoExcelFile &lt;- system.file("demoFiles/multiregion.xlsx", 
+                             package = "XLConnect")
+                             
+# Load a single named region into a single data.frame.
+df &lt;- readNamedRegionFromFile(demoExcelFile, name="Iris")
+
+# Load multiple regions at once - returns a (named) list 
+# of data.frames.
+df &lt;- readNamedRegionFromFile(demoExcelFile, 
+                              name=c("Calendar", "Iris", "IQ"))
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>XLConnect</em> version 0.2-13 <a href="00Index.html">Index</a>]</div>
+</body></html>

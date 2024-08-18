@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Data frame Normalization for Unit Tests</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for normalizeDataframe {XLConnect}"><tr><td>normalizeDataframe {XLConnect}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>
+Data frame Normalization for Unit Tests
+</h2>
+
+<h3>Description</h3>
+
+<p>Normalizes a data.frame with respect to column types. This is necessary for comparing data.frames written to Excel and then read from Excel. Excel does not know e.g. factor types. Factor variables
+in fact are written to Excel as ordinary strings. Therefore, when read back in to R, they are treated as character variables.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+normalizeDataframe(df, replaceInf)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>df</code></td>
+<td>
+<p><code>data.frame</code> to normalize</p>
+</td></tr>
+<tr valign="top"><td><code>replaceInf</code></td>
+<td>
+<p><code>logical</code> specifying if infinites should be replaced with <code>NA</code>; this is used
+because Excel does not support infinites</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>Returns a normalized <code>data.frame</code>
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Martin Studer<br />
+Mirai Solutions GmbH <a href="http://www.mirai-solutions.com">http://www.mirai-solutions.com</a>
+</p>
+
+<hr /><div style="text-align: center;">[Package <em>XLConnect</em> version 0.2-13 <a href="00Index.html">Index</a>]</div>
+</body></html>

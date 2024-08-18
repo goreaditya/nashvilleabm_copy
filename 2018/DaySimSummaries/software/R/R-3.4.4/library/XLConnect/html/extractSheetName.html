@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Extracting the sheet name from a formula</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for extractSheetName {XLConnect}"><tr><td>extractSheetName {XLConnect}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>
+Extracting the sheet name from a formula
+</h2>
+
+<h3>Description</h3>
+
+<p>Extracts the sheet name from a formula of the form &lt;SHEET_NAME&gt;!&lt;CELL_ADDRESS&gt;
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+extractSheetName(formula)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>formula</code></td>
+<td>
+<p>Formula string of the form &lt;SHEET_NAME&gt;!&lt;CELL_ADDRESS&gt;. Note that the validity
+of the formula won't be checked.</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>Returns the name of the sheet referenced in the formula. For quoted sheet names (required if names
+contain e.g. whitespaces or exclamation marks (!)) in formulas the function returns the unquoted
+name.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Martin Studer<br />
+Mirai Solutions GmbH <a href="http://www.mirai-solutions.com">http://www.mirai-solutions.com</a>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+extractSheetName(c("MySheet!$A$1", "'My Sheet'!$A$1", "'My!Sheet'!$A$1"))
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>XLConnect</em> version 0.2-13 <a href="00Index.html">Index</a>]</div>
+</body></html>
